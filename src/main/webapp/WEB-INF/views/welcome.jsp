@@ -33,8 +33,8 @@
                         </div>
                         <div class="navbar-collapse collapse">
                             <ul class="nav navbar-nav">
-                                <li><a href="./ORqmj">Stream</a></li>
-                                <li><a href="#">My Activity</a></li>
+                                <li><a href="./ORqmj">Stream 237</a></li>
+                                <li><a href="#">My Activity 237</a></li>
                                 <li><span class="badge badge-important">2</span><a href="#"><i class="fa fa-bell-o fa-lg" aria-hidden="true"></i></a></li>
                                 <li><a href="#"><i class="fa fa-envelope-o fa-lg" aria-hidden="true"></i></a></li>
                             </ul>
