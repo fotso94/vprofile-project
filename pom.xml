@@ -303,12 +303,4 @@
     <url>https://camerinfrabeauty-860143550421.d.codeartifact.us-east-1.amazonaws.com/maven/maven-central-store/</url>
       </repository>
     </repositories>
-    <pluginRepositories>
-      <pluginRepository>
-        <id>central</id>
-        <name>Maven Central Plugin Repository</name>
-        <url>https://repo.maven.apache.org/maven2</url>
-     </pluginRepository>
-   </pluginRepositories>
-
 </project>
