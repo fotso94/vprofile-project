@@ -28,7 +28,7 @@
     <id>codeartifact</id>
     <name>camerinfrabeauty--maven-central-store</name>
     <url>https://camerinfrabeauty-860143550421.d.codeartifact.us-east-1.amazonaws.com/maven/maven-central-store/</url>
-    <mirrorOf>*</mirrorOf>
+    <mirrorOf>*,!central</mirrorOf>
   </mirror>
 </mirrors>
 </settings>
