@@ -12,7 +12,7 @@ PrivSub2Cidr: 172.20.5.0/24
 PrivSub3Cidr: 172.20.6.0/24
 
 # Region Name
-region: "us-east-2"
+region: "us-east-1"
 
 # Zone Names
 zone1: us-east-1a
