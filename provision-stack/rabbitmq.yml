@@ -1,5 +1,5 @@
 ---
-- name: Install RabbitMQ using snap package
+- name: Install RabbitMQ using alternative method
   hosts: rmqsrvgrp
   become: yes
   gather_facts: yes
@@ -17,31 +17,106 @@
         autoclean: yes
         autoremove: yes
 
-    - name: Install snapd if not present
+    - name: Update apt cache
       apt:
-        name: snapd
-        state: present
         update_cache: yes
+        cache_valid_time: 3600
 
-    - name: Install RabbitMQ via snap
-      snap:
-        name: rabbitmq-server
+    - name: Install Erlang from Ubuntu repositories
+      apt:
+        name:
+          - erlang-nox
+          - erlang-mnesia
+          - erlang-os-mon
+          - erlang-eldap
+          - erlang-crypto
+          - erlang-inets
+          - erlang-parsetools
+          - erlang-public-key
+          - erlang-runtime-tools
+          - erlang-ssl
+          - erlang-syntax-tools
+          - erlang-tools
+          - erlang-xmerl
         state: present
 
-    - name: Wait for RabbitMQ to be ready
-      wait_for:
-        port: 5672
-        host: localhost
-        delay: 10
-        timeout: 60
+    - name: Download RabbitMQ generic Unix package
+      get_url:
+        url: "https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.8.34/rabbitmq-server-generic-unix-3.8.34.tar.xz"
+        dest: /tmp/rabbitmq-server.tar.xz
+        mode: '0644'
 
-    - name: Enable RabbitMQ management plugin
-      shell: |
-        snap run rabbitmq-server.rabbitmq-plugins enable rabbitmq_management
-      ignore_errors: yes
+    - name: Create RabbitMQ user
+      user:
+        name: rabbitmq
+        system: yes
+        shell: /bin/false
+        home: /var/lib/rabbitmq
+        create_home: yes
 
-    - name: Enable and start RabbitMQ service
-      service:
+    - name: Extract RabbitMQ to /opt
+      unarchive:
+        src: /tmp/rabbitmq-server.tar.xz
+        dest: /opt
+        remote_src: yes
+        owner: rabbitmq
+        group: rabbitmq
+
+    - name: Create symlink for easier access
+      file:
+        src: /opt/rabbitmq_server-3.8.34
+        dest: /opt/rabbitmq
+        state: link
+
+    - name: Create RabbitMQ directories
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: rabbitmq
+        group: rabbitmq
+        mode: '0755'
+      loop:
+        - /var/log/rabbitmq
+        - /var/lib/rabbitmq
+        - /etc/rabbitmq
+
+    - name: Add RabbitMQ to PATH
+      lineinfile:
+        path: /etc/environment
+        line: 'PATH="/opt/rabbitmq/sbin:$PATH"'
+        backup: yes
+
+    - name: Create RabbitMQ systemd service file
+      copy:
+        content: |
+          [Unit]
+          Description=RabbitMQ broker
+          After=network.target
+
+          [Service]
+          Type=notify
+          User=rabbitmq
+          Group=rabbitmq
+          WorkingDirectory=/var/lib/rabbitmq
+          ExecStart=/opt/rabbitmq/sbin/rabbitmq-server
+          ExecStop=/opt/rabbitmq/sbin/rabbitmqctl shutdown
+          Environment=HOME=/var/lib/rabbitmq
+          Environment=RABBITMQ_LOGS=/var/log/rabbitmq
+          Environment=RABBITMQ_MNESIA_BASE=/var/lib/rabbitmq/mnesia
+          TimeoutStopSec=60
+          LimitNOFILE=32768
+
+          [Install]
+          WantedBy=multi-user.target
+        dest: /etc/systemd/system/rabbitmq-server.service
+        mode: '0644'
+
+    - name: Reload systemd daemon
+      systemd:
+        daemon_reload: yes
+
+    - name: Start and enable RabbitMQ service
+      systemd:
         name: rabbitmq-server
         state: started
         enabled: yes
@@ -56,25 +131,31 @@
         mode: '0644'
       notify: Restart RMQ
 
-    - name: Create RabbitMQ admin user
-      rabbitmq_user:
-        user: test
-        password: test
-        configure_priv: .*
-        read_priv: .*
-        write_priv: .*
-        tags: administrator
-        state: present
-      notify: Restart RMQ
+    - name: Wait for RabbitMQ to be ready
+      wait_for:
+        port: 5672
+        host: localhost
+        delay: 5
+        timeout: 60
 
     - name: Enable RabbitMQ Management Plugin
-      rabbitmq_plugin:
-        names: rabbitmq_management
-        state: enabled
-      notify: Restart RMQ
+      shell: /opt/rabbitmq/sbin/rabbitmq-plugins enable rabbitmq_management
+      become_user: rabbitmq
+      environment:
+        HOME: /var/lib/rabbitmq
+
+    - name: Create RabbitMQ admin user
+      shell: |
+        /opt/rabbitmq/sbin/rabbitmqctl add_user test test
+        /opt/rabbitmq/sbin/rabbitmqctl set_user_tags test administrator
+        /opt/rabbitmq/sbin/rabbitmqctl set_permissions -p / test ".*" ".*" ".*"
+      become_user: rabbitmq
+      environment:
+        HOME: /var/lib/rabbitmq
+      ignore_errors: yes
 
   handlers:
     - name: Restart RMQ
-      service:
+      systemd:
         name: rabbitmq-server
         state: restarted
