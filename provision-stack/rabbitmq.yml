@@ -1,8 +1,12 @@
 ---
-- name: Install RabbitMQ with Ubuntu packages
+- name: Install RabbitMQ compatible with Ubuntu 22.04
   hosts: rmqsrvgrp
   become: yes
   gather_facts: yes
+
+  vars:
+    rabbitmq_version: "3.9.29"
+    rabbitmq_deb_url: "https://github.com/rabbitmq/rabbitmq-server/releases/download/v{{ rabbitmq_version }}/rabbitmq-server_{{ rabbitmq_version }}-1_all.deb"
 
   tasks:
     - name: Update apt cache
@@ -10,14 +14,33 @@
         update_cache: yes
         cache_valid_time: 3600
 
-    - name: Install Erlang and RabbitMQ from Ubuntu repositories
+    - name: Install Erlang from Ubuntu repositories
       apt:
         name:
           - erlang-nox
           - erlang-mnesia
           - erlang-os-mon
           - erlang-eldap
-          - rabbitmq-server
+          - erlang-crypto
+          - erlang-inets
+          - erlang-parsetools
+          - erlang-public-key
+          - erlang-runtime-tools
+          - erlang-ssl
+          - erlang-syntax-tools
+          - erlang-tools
+          - erlang-xmerl
+        state: present
+
+    - name: Download compatible RabbitMQ version
+      get_url:
+        url: "{{ rabbitmq_deb_url }}"
+        dest: /tmp/rabbitmq-server.deb
+        mode: '0644'
+
+    - name: Install RabbitMQ from downloaded package
+      apt:
+        deb: /tmp/rabbitmq-server.deb
         state: present
 
     - name: Enable and start RabbitMQ service
