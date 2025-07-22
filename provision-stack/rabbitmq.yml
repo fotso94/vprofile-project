@@ -4,9 +4,6 @@
   become: yes
   gather_facts: yes
 
-  vars:
-    rabbitmq_deb_url: https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.12.12/rabbitmq-server_3.12.12-1_all.deb
-
   tasks:
     - name: Install required dependencies
       apt:
@@ -14,16 +11,41 @@
           - curl
           - gnupg
           - apt-transport-https
+          - software-properties-common
         update_cache: yes
 
-    - name: Download RabbitMQ .deb package with bundled Erlang
-      get_url:
-        url: "{{ rabbitmq_deb_url }}"
-        dest: /tmp/rabbitmq-server.deb
+    - name: Add Erlang Solutions GPG key
+      apt_key:
+        url: https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc
+        state: present
 
-    - name: Install RabbitMQ using dpkg
+    - name: Add Erlang Solutions repository
+      apt_repository:
+        repo: "deb https://packages.erlang-solutions.com/ubuntu jammy contrib"
+        state: present
+        filename: erlang-solutions
+
+    - name: Install Erlang
       apt:
-        deb: /tmp/rabbitmq-server.deb
+        name: esl-erlang
+        update_cache: yes
+        state: present
+
+    - name: Add RabbitMQ GPG key
+      apt_key:
+        url: https://keys.openpgp.org/vks/v1/by-fingerprint/0A9AF2115F4687BD29803A206B73A36E6026DFCA
+        state: present
+
+    - name: Add RabbitMQ repository
+      apt_repository:
+        repo: "deb https://ppa1.novemberain.com/rabbitmq/rabbitmq-server/deb/ubuntu jammy main"
+        state: present
+        filename: rabbitmq
+
+    - name: Install RabbitMQ Server
+      apt:
+        name: rabbitmq-server
+        update_cache: yes
         state: present
 
     - name: Enable and start RabbitMQ service
@@ -35,8 +57,8 @@
     - name: Configure RabbitMQ to allow external access (disable loopback_users)
       copy:
         content: |
-          [{rabbit, [{loopback_users, []}]}].
-        dest: /etc/rabbitmq/rabbitmq.config
+          loopback_users = none
+        dest: /etc/rabbitmq/rabbitmq.conf
         owner: root
         group: root
         mode: '0644'
