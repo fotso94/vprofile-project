@@ -1,8 +1,23 @@
 ---
 - name: Install & Setup RabbitMQ with user
   hosts: rmqsrvgrp
+  become: yes
   gather_facts: no
+
   tasks:
+    - name: Add Erlang Solutions GPG key
+      apt_key:
+        url: https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc
+        state: present
+      tags: [package]
+
+    - name: Add Erlang Solutions APT repository
+      apt_repository:
+        repo: "deb https://packages.erlang-solutions.com/ubuntu jammy contrib"
+        state: present
+        filename: erlang
+      tags: [package]
+
     - name: Add RabbitMQ signing key
       apt_key:
         url: https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey
@@ -16,10 +31,10 @@
         filename: rabbitmq
       tags: [package]
 
-    - name: Install required packages (Erlang + RabbitMQ)
+    - name: Install Erlang and RabbitMQ
       apt:
         name:
-          - erlang
+          - esl-erlang
           - rabbitmq-server
         update_cache: yes
         cache_valid_time: 86400
@@ -38,6 +53,9 @@
         content: |
           [{rabbit, [{loopback_users, []}]}].
         dest: /etc/rabbitmq/rabbitmq.config
+        owner: root
+        group: root
+        mode: '0644'
       notify: Restart RMQ
       tags: [conf]
 
