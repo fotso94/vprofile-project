@@ -90,3 +90,68 @@
 2020-10-08 05:57:09,411 p=6806 u=ubuntu n=ansible | mc01                       : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 2020-10-08 05:57:09,411 p=6806 u=ubuntu n=ansible | rmq01                      : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 2020-10-08 05:57:09,411 p=6806 u=ubuntu n=ansible | web01                      : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-22 03:00:57,030 p=22676 u=root n=ansible | PLAY [Generate artifact, copy artifact & sql file to files directory] ***************************************************
+2025-07-22 03:00:57,054 p=22676 u=root n=ansible | TASK [Gathering Facts] **************************************************************************************************
+2025-07-22 03:00:58,798 p=22676 u=root n=ansible | ok: [localhost]
+2025-07-22 03:00:58,812 p=22676 u=root n=ansible | TASK [Install  jdk, maven, git] *****************************************************************************************
+2025-07-22 03:01:24,989 p=22676 u=root n=ansible | ok: [localhost] => (item=git)
+2025-07-22 03:02:03,838 p=22676 u=root n=ansible | changed: [localhost] => (item=openjdk-8-jdk)
+2025-07-22 03:02:16,088 p=22676 u=root n=ansible | changed: [localhost] => (item=maven)
+2025-07-22 03:02:16,102 p=22676 u=root n=ansible | TASK [Clone source code from github] ************************************************************************************
+2025-07-22 03:02:24,825 p=22676 u=root n=ansible | changed: [localhost]
+2025-07-22 03:02:24,835 p=22676 u=root n=ansible | TASK [mvn install command to build artifact] ****************************************************************************
+2025-07-22 03:03:06,575 p=22676 u=root n=ansible | changed: [localhost]
+2025-07-22 03:03:06,612 p=22676 u=root n=ansible | TASK [Copy artifacts to files directory] ********************************************************************************
+2025-07-22 03:03:07,950 p=22676 u=root n=ansible | changed: [localhost] => (item=/root/vpro-stack/vprofile-project/provision-stack/Vprofile-repo/target/vprofile-v2.war)
+2025-07-22 03:03:07,961 p=22676 u=root n=ansible | TASK [Copy SQL file to files directory] *********************************************************************************
+2025-07-22 03:03:08,390 p=22676 u=root n=ansible | changed: [localhost]
+2025-07-22 03:03:08,406 p=22676 u=root n=ansible | PLAY RECAP **************************************************************************************************************
+2025-07-22 03:03:08,406 p=22676 u=root n=ansible | localhost                  : ok=6    changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-22 03:05:59,599 p=27103 u=root n=ansible | PLAY [Set host to ip mapping in /etc/hosts file of all the instances in the stack] **************************************
+2025-07-22 03:05:59,622 p=27103 u=root n=ansible | TASK [Gathering Facts] **************************************************************************************************
+2025-07-22 03:06:01,121 p=27103 u=root n=ansible | fatal: [web01]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\r\n@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @\r\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\r\nPermissions 0644 for 'loginkey_vpro.pem' are too open.\r\nIt is required that your private key files are NOT accessible by others.\r\nThis private key will be ignored.\r\nLoad key \"loginkey_vpro.pem\": bad permissions\r\nubuntu@172.20.4.245: Permission denied (publickey).", "unreachable": true}
+2025-07-22 03:06:01,182 p=27103 u=root n=ansible | fatal: [rmq01]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\r\n@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @\r\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\r\nPermissions 0644 for 'loginkey_vpro.pem' are too open.\r\nIt is required that your private key files are NOT accessible by others.\r\nThis private key will be ignored.\r\nLoad key \"loginkey_vpro.pem\": bad permissions\r\nubuntu@172.20.4.116: Permission denied (publickey).", "unreachable": true}
+2025-07-22 03:06:01,220 p=27103 u=root n=ansible | fatal: [app01]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\r\n@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @\r\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\r\nPermissions 0644 for 'loginkey_vpro.pem' are too open.\r\nIt is required that your private key files are NOT accessible by others.\r\nThis private key will be ignored.\r\nLoad key \"loginkey_vpro.pem\": bad permissions\r\nubuntu@172.20.4.236: Permission denied (publickey).", "unreachable": true}
+2025-07-22 03:06:01,221 p=27103 u=root n=ansible | fatal: [mc01]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\r\n@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @\r\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\r\nPermissions 0644 for 'loginkey_vpro.pem' are too open.\r\nIt is required that your private key files are NOT accessible by others.\r\nThis private key will be ignored.\r\nLoad key \"loginkey_vpro.pem\": bad permissions\r\nubuntu@172.20.4.136: Permission denied (publickey).", "unreachable": true}
+2025-07-22 03:06:01,448 p=27103 u=root n=ansible | ok: [cntl]
+2025-07-22 03:06:02,519 p=27103 u=root n=ansible | fatal: [db01]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\r\n@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @\r\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\r\nPermissions 0644 for 'loginkey_vpro.pem' are too open.\r\nIt is required that your private key files are NOT accessible by others.\r\nThis private key will be ignored.\r\nLoad key \"loginkey_vpro.pem\": bad permissions\r\nubuntu@172.20.4.76: Permission denied (publickey).", "unreachable": true}
+2025-07-22 03:06:02,536 p=27103 u=root n=ansible | TASK [Import VPC setup Variable] ****************************************************************************************
+2025-07-22 03:06:02,552 p=27103 u=root n=ansible | ok: [cntl]
+2025-07-22 03:06:02,560 p=27103 u=root n=ansible | TASK [Update hosts file for all the hosts] ******************************************************************************
+2025-07-22 03:06:02,951 p=27103 u=root n=ansible | changed: [cntl]
+2025-07-22 03:06:02,965 p=27103 u=root n=ansible | PLAY RECAP **************************************************************************************************************
+2025-07-22 03:06:02,966 p=27103 u=root n=ansible | app01                      : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-22 03:06:02,966 p=27103 u=root n=ansible | cntl                       : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-22 03:06:02,966 p=27103 u=root n=ansible | db01                       : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-22 03:06:02,966 p=27103 u=root n=ansible | mc01                       : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-22 03:06:02,967 p=27103 u=root n=ansible | rmq01                      : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-22 03:06:02,967 p=27103 u=root n=ansible | web01                      : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-22 03:10:44,485 p=27258 u=root n=ansible | PLAY [Set host to ip mapping in /etc/hosts file of all the instances in the stack] **************************************
+2025-07-22 03:10:44,495 p=27258 u=root n=ansible | TASK [Gathering Facts] **************************************************************************************************
+2025-07-22 03:10:46,332 p=27258 u=root n=ansible | ok: [cntl]
+2025-07-22 03:10:46,426 p=27258 u=root n=ansible | ok: [app01]
+2025-07-22 03:10:47,328 p=27258 u=root n=ansible | ok: [mc01]
+2025-07-22 03:10:47,343 p=27258 u=root n=ansible | ok: [rmq01]
+2025-07-22 03:10:47,368 p=27258 u=root n=ansible | ok: [web01]
+2025-07-22 03:10:48,839 p=27258 u=root n=ansible | ok: [db01]
+2025-07-22 03:10:48,853 p=27258 u=root n=ansible | TASK [Import VPC setup Variable] ****************************************************************************************
+2025-07-22 03:10:48,882 p=27258 u=root n=ansible | ok: [cntl]
+2025-07-22 03:10:48,903 p=27258 u=root n=ansible | ok: [web01]
+2025-07-22 03:10:48,925 p=27258 u=root n=ansible | ok: [app01]
+2025-07-22 03:10:48,948 p=27258 u=root n=ansible | ok: [rmq01]
+2025-07-22 03:10:48,970 p=27258 u=root n=ansible | ok: [mc01]
+2025-07-22 03:10:48,978 p=27258 u=root n=ansible | ok: [db01]
+2025-07-22 03:10:48,987 p=27258 u=root n=ansible | TASK [Update hosts file for all the hosts] ******************************************************************************
+2025-07-22 03:10:49,843 p=27258 u=root n=ansible | ok: [cntl]
+2025-07-22 03:10:49,858 p=27258 u=root n=ansible | changed: [rmq01]
+2025-07-22 03:10:49,863 p=27258 u=root n=ansible | changed: [mc01]
+2025-07-22 03:10:49,864 p=27258 u=root n=ansible | changed: [app01]
+2025-07-22 03:10:49,867 p=27258 u=root n=ansible | changed: [web01]
+2025-07-22 03:10:50,172 p=27258 u=root n=ansible | changed: [db01]
+2025-07-22 03:10:50,188 p=27258 u=root n=ansible | PLAY RECAP **************************************************************************************************************
+2025-07-22 03:10:50,189 p=27258 u=root n=ansible | app01                      : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-22 03:10:50,189 p=27258 u=root n=ansible | cntl                       : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-22 03:10:50,189 p=27258 u=root n=ansible | db01                       : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-22 03:10:50,189 p=27258 u=root n=ansible | mc01                       : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-22 03:10:50,190 p=27258 u=root n=ansible | rmq01                      : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-22 03:10:50,190 p=27258 u=root n=ansible | web01                      : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
