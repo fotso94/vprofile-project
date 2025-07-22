@@ -1,58 +1,40 @@
 ---
-- name: Install RabbitMQ from official repo with Erlang 26+
+- name: Install RabbitMQ with Ubuntu packages
   hosts: rmqsrvgrp
   become: yes
   gather_facts: yes
 
   tasks:
-    - name: Add RabbitMQ signing key
-      apt_key:
-        url: https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey
-        state: present
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
 
-    - name: Add RabbitMQ PackageCloud APT repository
-      apt_repository:
-        repo: "deb https://packagecloud.io/rabbitmq/rabbitmq-server/ubuntu/ jammy main"
-        state: present
-        filename: rabbitmq
-
-    - name: Install Erlang and RabbitMQ
+    - name: Install Erlang and RabbitMQ from Ubuntu repositories
       apt:
         name:
-          - erlang-base
-          - erlang-asn1
-          - erlang-crypto
-          - erlang-eldap
-          - erlang-inets
+          - erlang-nox
           - erlang-mnesia
           - erlang-os-mon
-          - erlang-parsetools
-          - erlang-public-key
-          - erlang-runtime-tools
-          - erlang-snmp
-          - erlang-ssl
-          - erlang-syntax-tools
-          - erlang-tools
-          - erlang-xmerl
+          - erlang-eldap
           - rabbitmq-server
-        update_cache: yes
         state: present
 
-    - name: Start and enable RabbitMQ
+    - name: Enable and start RabbitMQ service
       service:
         name: rabbitmq-server
         state: started
         enabled: yes
 
-    - name: Configure RabbitMQ (disable loopback_users)
+    - name: Configure RabbitMQ to allow external access (disable loopback_users)
       copy:
         content: |
-          [{rabbit, [{loopback_users, []}]}].
-        dest: /etc/rabbitmq/rabbitmq.config
+          loopback_users = none
+        dest: /etc/rabbitmq/rabbitmq.conf
         owner: root
         group: root
         mode: '0644'
-      notify: Restart RabbitMQ
+      notify: Restart RMQ
 
     - name: Create RabbitMQ admin user
       rabbitmq_user:
@@ -63,16 +45,16 @@
         write_priv: .*
         tags: administrator
         state: present
-      notify: Restart RabbitMQ
+      notify: Restart RMQ
 
     - name: Enable RabbitMQ Management Plugin
       rabbitmq_plugin:
         names: rabbitmq_management
         state: enabled
-      notify: Restart RabbitMQ
+      notify: Restart RMQ
 
   handlers:
-    - name: Restart RabbitMQ
+    - name: Restart RMQ
       service:
         name: rabbitmq-server
         state: restarted
