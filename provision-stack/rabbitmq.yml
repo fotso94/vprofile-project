@@ -1,12 +1,8 @@
 ---
-- name: Install RabbitMQ compatible with Ubuntu 22.04
+- name: Install RabbitMQ using snap package
   hosts: rmqsrvgrp
   become: yes
   gather_facts: yes
-
-  vars:
-    rabbitmq_version: "3.8.34"
-    rabbitmq_deb_url: "https://github.com/rabbitmq/rabbitmq-server/releases/download/v{{ rabbitmq_version }}/rabbitmq-server_{{ rabbitmq_version }}-1_all.deb"
 
   tasks:
     - name: Remove any existing RabbitMQ packages
@@ -21,39 +17,28 @@
         autoclean: yes
         autoremove: yes
 
-    - name: Update apt cache
+    - name: Install snapd if not present
       apt:
+        name: snapd
+        state: present
         update_cache: yes
-        cache_valid_time: 3600
 
-    - name: Install Erlang from Ubuntu repositories
-      apt:
-        name:
-          - erlang-nox
-          - erlang-mnesia
-          - erlang-os-mon
-          - erlang-eldap
-          - erlang-crypto
-          - erlang-inets
-          - erlang-parsetools
-          - erlang-public-key
-          - erlang-runtime-tools
-          - erlang-ssl
-          - erlang-syntax-tools
-          - erlang-tools
-          - erlang-xmerl
+    - name: Install RabbitMQ via snap
+      snap:
+        name: rabbitmq-server
         state: present
 
-    - name: Download compatible RabbitMQ version
-      get_url:
-        url: "{{ rabbitmq_deb_url }}"
-        dest: /tmp/rabbitmq-server.deb
-        mode: '0644'
+    - name: Wait for RabbitMQ to be ready
+      wait_for:
+        port: 5672
+        host: localhost
+        delay: 10
+        timeout: 60
 
-    - name: Install RabbitMQ from downloaded package
-      apt:
-        deb: /tmp/rabbitmq-server.deb
-        state: present
+    - name: Enable RabbitMQ management plugin
+      shell: |
+        snap run rabbitmq-server.rabbitmq-plugins enable rabbitmq_management
+      ignore_errors: yes
 
     - name: Enable and start RabbitMQ service
       service:
