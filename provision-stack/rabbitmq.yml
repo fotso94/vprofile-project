@@ -5,10 +5,22 @@
   gather_facts: yes
 
   vars:
-    rabbitmq_version: "3.9.29"
+    rabbitmq_version: "3.8.34"
     rabbitmq_deb_url: "https://github.com/rabbitmq/rabbitmq-server/releases/download/v{{ rabbitmq_version }}/rabbitmq-server_{{ rabbitmq_version }}-1_all.deb"
 
   tasks:
+    - name: Remove any existing RabbitMQ packages
+      apt:
+        name: rabbitmq-server
+        state: absent
+        purge: yes
+      ignore_errors: yes
+
+    - name: Clean package cache
+      apt:
+        autoclean: yes
+        autoremove: yes
+
     - name: Update apt cache
       apt:
         update_cache: yes
