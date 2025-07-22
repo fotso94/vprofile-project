@@ -11,7 +11,7 @@
 
     - name: Add RabbitMQ APT repository
       apt_repository:
-        repo: "deb https://ppa1.novemberain.com/rabbitmq/debian jammy main"
+        repo: "deb https://packagecloud.io/rabbitmq/rabbitmq-server/ubuntu/ jammy main"
         state: present
         filename: rabbitmq
       tags: [package]
