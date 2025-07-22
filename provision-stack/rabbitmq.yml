@@ -1,68 +1,58 @@
 ---
-- name: Install RabbitMQ Standalone with bundled Erlang
+- name: Install RabbitMQ from official repo with Erlang 26+
   hosts: rmqsrvgrp
   become: yes
   gather_facts: yes
 
   tasks:
-    - name: Install required dependencies
-      apt:
-        name:
-          - curl
-          - gnupg
-          - apt-transport-https
-          - software-properties-common
-        update_cache: yes
-
-    - name: Add Erlang Solutions GPG key
+    - name: Add RabbitMQ signing key
       apt_key:
-        url: https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc
+        url: https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey
         state: present
 
-    - name: Add Erlang Solutions repository
+    - name: Add RabbitMQ PackageCloud APT repository
       apt_repository:
-        repo: "deb https://packages.erlang-solutions.com/ubuntu jammy contrib"
-        state: present
-        filename: erlang-solutions
-
-    - name: Install Erlang
-      apt:
-        name: esl-erlang
-        update_cache: yes
-        state: present
-
-    - name: Add RabbitMQ GPG key
-      apt_key:
-        url: https://keys.openpgp.org/vks/v1/by-fingerprint/0A9AF2115F4687BD29803A206B73A36E6026DFCA
-        state: present
-
-    - name: Add RabbitMQ repository
-      apt_repository:
-        repo: "deb https://ppa1.novemberain.com/rabbitmq/rabbitmq-server/deb/ubuntu jammy main"
+        repo: "deb https://packagecloud.io/rabbitmq/rabbitmq-server/ubuntu/ jammy main"
         state: present
         filename: rabbitmq
 
-    - name: Install RabbitMQ Server
+    - name: Install Erlang and RabbitMQ
       apt:
-        name: rabbitmq-server
+        name:
+          - erlang-base
+          - erlang-asn1
+          - erlang-crypto
+          - erlang-eldap
+          - erlang-inets
+          - erlang-mnesia
+          - erlang-os-mon
+          - erlang-parsetools
+          - erlang-public-key
+          - erlang-runtime-tools
+          - erlang-snmp
+          - erlang-ssl
+          - erlang-syntax-tools
+          - erlang-tools
+          - erlang-xmerl
+          - rabbitmq-server
         update_cache: yes
         state: present
 
-    - name: Enable and start RabbitMQ service
+    - name: Start and enable RabbitMQ
       service:
         name: rabbitmq-server
         state: started
         enabled: yes
 
-    - name: Configure RabbitMQ to allow external access (disable loopback_users)
+    - name: Configure RabbitMQ (disable loopback_users)
       copy:
         content: |
-          loopback_users = none
-        dest: /etc/rabbitmq/rabbitmq.conf
+          [{rabbit, [{loopback_users, []}]}].
+        dest: /etc/rabbitmq/rabbitmq.config
         owner: root
         group: root
         mode: '0644'
-      notify: Restart RMQ
+      notify: Restart RabbitMQ
 
     - name: Create RabbitMQ admin user
       rabbitmq_user:
@@ -73,16 +63,16 @@
         write_priv: .*
         tags: administrator
         state: present
-      notify: Restart RMQ
+      notify: Restart RabbitMQ
 
     - name: Enable RabbitMQ Management Plugin
       rabbitmq_plugin:
         names: rabbitmq_management
         state: enabled
-      notify: Restart RMQ
+      notify: Restart RabbitMQ
 
   handlers:
-    - name: Restart RMQ
+    - name: Restart RabbitMQ
       service:
         name: rabbitmq-server
         state: restarted
