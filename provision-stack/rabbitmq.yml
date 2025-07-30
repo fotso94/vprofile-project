@@ -19,21 +19,37 @@
           - software-properties-common
         state: present
 
-    - name: Add RabbitMQ signing key (modern method)
-      get_url:
-        url: https://keys.openpgp.org/vks/v1/by-fingerprint/0A9AF2115F4687BD29803A206B73A36E6026DFCA
-        dest: /tmp/rabbitmq-release-signing-key.asc
-        mode: '0644'
+    - name: Remove any existing RabbitMQ repositories
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /etc/apt/sources.list.d/rabbitmq.list
+        - /etc/apt/sources.list.d/rabbitmq-server.list
+      ignore_errors: yes
 
-    - name: Add RabbitMQ GPG key to keyring
-      shell: |
-        gpg --dearmor < /tmp/rabbitmq-release-signing-key.asc > /usr/share/keyrings/rabbitmq-archive-keyring.gpg
-
-    - name: Add RabbitMQ repository for Ubuntu 22.04
-      apt_repository:
-        repo: "deb [signed-by=/usr/share/keyrings/rabbitmq-archive-keyring.gpg] https://ppa1.novemberain.com/rabbitmq/rabbitmq-server/deb/ubuntu jammy main"
+    - name: Add RabbitMQ Team GPG key (Cloudsmith)
+      apt_key:
+        keyserver: keyserver.ubuntu.com
+        id: 9F4587F226208342
         state: present
-        filename: rabbitmq
+
+    - name: Add RabbitMQ main signing key
+      apt_key:
+        url: https://github.com/rabbitmq/signing-keys/releases/download/2.0/rabbitmq-release-signing-key.asc
+        state: present
+
+    - name: Add RabbitMQ repository (Cloudsmith - official)
+      apt_repository:
+        repo: "deb https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/deb/ubuntu jammy main"
+        state: present
+        filename: rabbitmq-server
+        update_cache: no
+
+    - name: Update apt cache after adding repository
+      apt:
+        update_cache: yes
+        cache_valid_time: 0
 
     - name: Install Erlang from Ubuntu repositories (compatible version)
       apt:
