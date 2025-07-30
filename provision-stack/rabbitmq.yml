@@ -19,39 +19,19 @@
           - software-properties-common
         state: present
 
-    - name: Remove any existing RabbitMQ repositories
-      file:
-        path: "{{ item }}"
-        state: absent
-      loop:
-        - /etc/apt/sources.list.d/rabbitmq.list
-        - /etc/apt/sources.list.d/rabbitmq-server.list
-      ignore_errors: yes
+    - name: Add RabbitMQ signing key (Cloudsmith official)
+      get_url:
+        url: https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/gpg.key
+        dest: /usr/share/keyrings/rabbitmq-archive-keyring.gpg
+        mode: '0644'
 
-    - name: Add RabbitMQ Team GPG key (Cloudsmith)
-      apt_key:
-        keyserver: keyserver.ubuntu.com
-        id: 9F4587F226208342
-        state: present
-
-    - name: Add RabbitMQ main signing key
-      apt_key:
-        url: https://github.com/rabbitmq/signing-keys/releases/download/2.0/rabbitmq-release-signing-key.asc
-        state: present
-
-    - name: Add RabbitMQ repository (Cloudsmith - official)
+    - name: Add RabbitMQ APT repository (Ubuntu 22.04 - jammy)
       apt_repository:
-        repo: "deb https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/deb/ubuntu jammy main"
+        repo: "deb [signed-by=/usr/share/keyrings/rabbitmq-archive-keyring.gpg] https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/deb/ubuntu jammy main"
         state: present
-        filename: rabbitmq-server
-        update_cache: no
+        filename: rabbitmq
 
-    - name: Update apt cache after adding repository
-      apt:
-        update_cache: yes
-        cache_valid_time: 0
-
-    - name: Install Erlang from Ubuntu repositories (compatible version)
+    - name: Install Erlang from Ubuntu repositories
       apt:
         name:
           - erlang-base
@@ -80,7 +60,6 @@
         state: present
         update_cache: yes
 
-
     - name: Start & Enable RabbitMQ service
       systemd:
         name: rabbitmq-server
@@ -95,13 +74,10 @@
         delay: 5
         timeout: 60
 
-    - name: Configure RabbitMQ (modern format)
+    - name: Configure RabbitMQ (rabbitmq.conf)
       copy:
         content: |
-          # Allow remote connections
           loopback_users = none
-
-          # Enable management plugin
           management.tcp.port = 15672
           management.tcp.ip = 0.0.0.0
         dest: /etc/rabbitmq/rabbitmq.conf
