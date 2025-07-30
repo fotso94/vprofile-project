@@ -1,74 +1,88 @@
+---
 - name: Install & Setup RabbitMQ with user
   hosts: rmqsrvgrp
   become: yes
   gather_facts: yes
 
-  pre_tasks:
-    - name: Add Erlang public key
-      apt_key:
-        url: https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc
-        state: present
-
-    - name: Add Erlang repository
+  tasks:
+    - name: Install dependencies
       apt:
-        deb: https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb
+        name: "{{ item }}"
         state: present
+        update_cache: yes
+      loop:
+        - curl
+        - gnupg
+        - apt-transport-https
+        - software-properties-common
+        - erlang
+      tags: package
 
-    - name: Add RabbitMQ public key
+    - name: Add RabbitMQ public signing key
       apt_key:
-        url: https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey
+        url: https://github.com/rabbitmq/signing-keys/releases/download/2.0/rabbitmq-release-signing-key.asc
         state: present
+      tags: package
 
-    - name: Add RabbitMQ repository
+    - name: Add RabbitMQ APT repository
       apt_repository:
-        repo: "deb https://packagecloud.io/rabbitmq/rabbitmq-server/ubuntu/ jammy main"
+        repo: deb https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/deb/ubuntu jammy main
         state: present
         filename: rabbitmq
+      when: ansible_distribution_release == "jammy"
+      tags: package
 
-    - name: Update apt cache
-      apt:
-        update_cache: yes
-
-  tasks:
-    - name: Install Erlang and RabbitMQ
-      apt:
-        name:
-          - erlang
-          - rabbitmq-server
+    - name: Add RabbitMQ APT repository (Ubuntu 24.04 - noble)
+      apt_repository:
+        repo: deb https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/deb/ubuntu noble main
         state: present
+        filename: rabbitmq
+      when: ansible_distribution_release == "noble"
+      tags: package
 
-    - name: Start and enable RabbitMQ
+    - name: Install RabbitMQ server
+      apt:
+        name: rabbitmq-server
+        state: present
+        update_cache: yes
+      tags: package
+
+    - name: Start & enable RabbitMQ
       service:
         name: rabbitmq-server
         state: started
         enabled: yes
+      tags: svc
 
-    - name: Configure RabbitMQ (sysctl-style)
+    - name: Allow guest access remotely (disable loopback_users)
       copy:
         content: |
-          loopback_users.guest = false
-        dest: /etc/rabbitmq/rabbitmq.conf
-      notify: Restart RMQ
+          [{rabbit, [{loopback_users, []}]}].
+        dest: /etc/rabbitmq/rabbitmq.config
+      notify: Restart RabbitMQ
+      tags: conf
 
-    - name: Enable management plugin
-      community.rabbitmq.rabbitmq_plugin:
-        names: rabbitmq_management
-        state: enabled
-      notify: Restart RMQ
-
-    - name: Create RabbitMQ user
-      community.rabbitmq.rabbitmq_user:
+    - name: Create RabbitMQ admin user
+      rabbitmq_user:
         user: test
         password: test
-        tags: administrator
         configure_priv: .*
         read_priv: .*
         write_priv: .*
+        tags: administrator
         state: present
-      notify: Restart RMQ
+      notify: Restart RabbitMQ
+      tags: conf
+
+    - name: Enable RabbitMQ management plugin
+      rabbitmq_plugin:
+        names: rabbitmq_management
+        state: enabled
+      notify: Restart RabbitMQ
+      tags: plugin
 
   handlers:
-    - name: Restart RMQ
+    - name: Restart RabbitMQ
       service:
         name: rabbitmq-server
         state: restarted
