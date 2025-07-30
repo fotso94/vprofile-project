@@ -4435,3 +4435,659 @@ Shared connection to 172.20.4.184 closed.
 2025-07-30 00:57:25,700 p=4612 u=root n=ansible | mc01                       : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 2025-07-30 00:57:25,701 p=4612 u=root n=ansible | rmq01                      : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 2025-07-30 00:57:25,701 p=4612 u=root n=ansible | web01                      : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-30 01:15:29,591 p=4957 u=root n=ansible | PLAY [Install & Setup RabbitMQ with user] ***********************************************************************************
+2025-07-30 01:15:29,603 p=4957 u=root n=ansible | TASK [Gathering Facts] ******************************************************************************************************
+2025-07-30 01:15:31,388 p=4957 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:15:31,396 p=4957 u=root n=ansible | TASK [Add Erlang public key] ************************************************************************************************
+2025-07-30 01:15:32,508 p=4957 u=root n=ansible | fatal: [rmq01]: FAILED! => {"changed": false, "msg": "Failed to download key at https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc: HTTP Error 504: Gateway Time-out"}
+2025-07-30 01:15:32,510 p=4957 u=root n=ansible | PLAY RECAP ******************************************************************************************************************
+2025-07-30 01:15:32,511 p=4957 u=root n=ansible | rmq01                      : ok=1    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-07-30 01:18:04,764 p=5015 u=root n=ansible | PLAY [Install & Setup RabbitMQ with user] ***********************************************************************************
+2025-07-30 01:18:04,776 p=5015 u=root n=ansible | TASK [Gathering Facts] ******************************************************************************************************
+2025-07-30 01:18:06,631 p=5015 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:18:06,645 p=5015 u=root n=ansible | TASK [Install dependencies] *************************************************************************************************
+2025-07-30 01:18:39,453 p=5015 u=root n=ansible | ok: [rmq01] => (item=curl)
+2025-07-30 01:18:43,398 p=5015 u=root n=ansible | ok: [rmq01] => (item=gnupg)
+2025-07-30 01:18:50,224 p=5015 u=root n=ansible | changed: [rmq01] => (item=apt-transport-https)
+2025-07-30 01:18:53,098 p=5015 u=root n=ansible | ok: [rmq01] => (item=software-properties-common)
+2025-07-30 01:19:49,731 p=5015 u=root n=ansible | changed: [rmq01] => (item=erlang)
+2025-07-30 01:19:49,747 p=5015 u=root n=ansible | TASK [Add RabbitMQ public signing key] **************************************************************************************
+2025-07-30 01:19:51,129 p=5015 u=root n=ansible | changed: [rmq01]
+2025-07-30 01:19:51,139 p=5015 u=root n=ansible | TASK [Add RabbitMQ APT repository] ******************************************************************************************
+2025-07-30 01:20:49,811 p=5015 u=root n=ansible | fatal: [rmq01]: FAILED! => {"changed": false, "msg": "Failed to update apt cache: W:GPG error: https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/deb/ubuntu jammy InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 9F4587F226208342, E:The repository 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/deb/ubuntu jammy InRelease' is not signed."}
+2025-07-30 01:20:49,815 p=5015 u=root n=ansible | PLAY RECAP ******************************************************************************************************************
+2025-07-30 01:20:49,815 p=5015 u=root n=ansible | rmq01                      : ok=3    changed=2    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-07-30 01:22:36,346 p=5106 u=root n=ansible | PLAY [Install & Setup RabbitMQ with user] ***********************************************************************************
+2025-07-30 01:22:36,358 p=5106 u=root n=ansible | TASK [Gathering Facts] ******************************************************************************************************
+2025-07-30 01:22:38,639 p=5106 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:22:38,654 p=5106 u=root n=ansible | TASK [Install required dependencies] ****************************************************************************************
+2025-07-30 01:22:47,213 p=5106 u=root n=ansible | ok: [rmq01] => (item=curl)
+2025-07-30 01:22:49,887 p=5106 u=root n=ansible | ok: [rmq01] => (item=gnupg)
+2025-07-30 01:22:52,481 p=5106 u=root n=ansible | ok: [rmq01] => (item=apt-transport-https)
+2025-07-30 01:22:55,031 p=5106 u=root n=ansible | ok: [rmq01] => (item=software-properties-common)
+2025-07-30 01:22:57,610 p=5106 u=root n=ansible | ok: [rmq01] => (item=erlang)
+2025-07-30 01:22:57,621 p=5106 u=root n=ansible | TASK [Download RabbitMQ public signing key] *********************************************************************************
+2025-07-30 01:22:58,550 p=5106 u=root n=ansible | changed: [rmq01]
+2025-07-30 01:22:58,559 p=5106 u=root n=ansible | TASK [Add RabbitMQ APT repository (Ubuntu 22.04 - jammy)] *******************************************************************
+2025-07-30 01:23:51,526 p=5106 u=root n=ansible | fatal: [rmq01]: FAILED! => {"changed": false, "msg": "Failed to update apt cache: W:GPG error: https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/deb/ubuntu jammy InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 9F4587F226208342, E:The repository 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/deb/ubuntu jammy InRelease' is not signed."}
+2025-07-30 01:23:51,530 p=5106 u=root n=ansible | PLAY RECAP ******************************************************************************************************************
+2025-07-30 01:23:51,530 p=5106 u=root n=ansible | rmq01                      : ok=3    changed=1    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-07-30 01:25:35,241 p=5194 u=root n=ansible | PLAY [Install & Setup RabbitMQ with user] ***********************************************************************************
+2025-07-30 01:25:35,253 p=5194 u=root n=ansible | TASK [Gathering Facts] ******************************************************************************************************
+2025-07-30 01:25:37,389 p=5194 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:25:37,403 p=5194 u=root n=ansible | TASK [Install required dependencies] ****************************************************************************************
+2025-07-30 01:25:45,576 p=5194 u=root n=ansible | ok: [rmq01] => (item=curl)
+2025-07-30 01:25:48,175 p=5194 u=root n=ansible | ok: [rmq01] => (item=gnupg)
+2025-07-30 01:25:50,705 p=5194 u=root n=ansible | ok: [rmq01] => (item=apt-transport-https)
+2025-07-30 01:26:00,012 p=5194 u=root n=ansible | ok: [rmq01] => (item=software-properties-common)
+2025-07-30 01:26:02,590 p=5194 u=root n=ansible | ok: [rmq01] => (item=erlang)
+2025-07-30 01:26:02,601 p=5194 u=root n=ansible | TASK [Download official RabbitMQ Cloudsmith GPG key] ************************************************************************
+2025-07-30 01:26:03,310 p=5194 u=root n=ansible | [WARNING]: Consider using the get_url or uri module rather than running 'curl'.  If you need to use command because get_url
+or uri is insufficient you can add 'warn: false' to this command task or set 'command_warnings=False' in ansible.cfg to get
+rid of this message.
+
+2025-07-30 01:26:03,310 p=5194 u=root n=ansible | changed: [rmq01]
+2025-07-30 01:26:03,320 p=5194 u=root n=ansible | TASK [Add RabbitMQ APT repository (Ubuntu 22.04 - jammy)] *******************************************************************
+2025-07-30 01:26:15,268 p=5194 u=root n=ansible | changed: [rmq01]
+2025-07-30 01:26:15,278 p=5194 u=root n=ansible | TASK [Install RabbitMQ server] **********************************************************************************************
+2025-07-30 01:26:19,488 p=5194 u=root n=ansible | fatal: [rmq01]: FAILED! => {"cache_update_time": 1753838778, "cache_updated": true, "changed": false, "msg": "'/usr/bin/apt-get -y -o \"Dpkg::Options::=--force-confdef\" -o \"Dpkg::Options::=--force-confold\"      install 'rabbitmq-server'' failed: E: Unable to correct problems, you have held broken packages.\n", "rc": 100, "stderr": "E: Unable to correct problems, you have held broken packages.\n", "stderr_lines": ["E: Unable to correct problems, you have held broken packages."], "stdout": "Reading package lists...\nBuilding dependency tree...\nReading state information...\nSome packages could not be installed. This may mean that you have\nrequested an impossible situation or if you are using the unstable\ndistribution that some required packages have not yet been created\nor been moved out of Incoming.\nThe following information may help to resolve the situation:\n\nThe following packages have unmet dependencies:\n rabbitmq-server : Depends: erlang-base (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            erlang-base-hipe (>= 1:26.0) but it is not installable or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-crypto (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-eldap (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-inets (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-mnesia (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-os-mon (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-parsetools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-public-key (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-runtime-tools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-ssl (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-syntax-tools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-tools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-xmerl (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n", "stdout_lines": ["Reading package lists...", "Building dependency tree...", "Reading state information...", "Some packages could not be installed. This may mean that you have", "requested an impossible situation or if you are using the unstable", "distribution that some required packages have not yet been created", "or been moved out of Incoming.", "The following information may help to resolve the situation:", "", "The following packages have unmet dependencies:", " rabbitmq-server : Depends: erlang-base (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            erlang-base-hipe (>= 1:26.0) but it is not installable or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-crypto (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-eldap (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-inets (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-mnesia (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-os-mon (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-parsetools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-public-key (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-runtime-tools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-ssl (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-syntax-tools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-tools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-xmerl (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable"]}
+2025-07-30 01:26:19,492 p=5194 u=root n=ansible | PLAY RECAP ******************************************************************************************************************
+2025-07-30 01:26:19,492 p=5194 u=root n=ansible | rmq01                      : ok=4    changed=2    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-07-30 01:30:40,682 p=5294 u=root n=ansible | PLAY [Install & Setup RabbitMQ with user] ***********************************************************************************
+2025-07-30 01:30:40,693 p=5294 u=root n=ansible | TASK [Gathering Facts] ******************************************************************************************************
+2025-07-30 01:30:42,884 p=5294 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:30:42,899 p=5294 u=root n=ansible | TASK [Install required dependencies] ****************************************************************************************
+2025-07-30 01:30:45,778 p=5294 u=root n=ansible | ok: [rmq01] => (item=curl)
+2025-07-30 01:30:48,944 p=5294 u=root n=ansible | ok: [rmq01] => (item=gnupg)
+2025-07-30 01:30:51,638 p=5294 u=root n=ansible | ok: [rmq01] => (item=apt-transport-https)
+2025-07-30 01:30:54,480 p=5294 u=root n=ansible | ok: [rmq01] => (item=software-properties-common)
+2025-07-30 01:30:54,491 p=5294 u=root n=ansible | TASK [Add Erlang Solutions GPG key] *****************************************************************************************
+2025-07-30 01:30:55,579 p=5294 u=root n=ansible | fatal: [rmq01]: FAILED! => {"changed": false, "msg": "Failed to download key at https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc: HTTP Error 504: Gateway Time-out"}
+2025-07-30 01:30:55,582 p=5294 u=root n=ansible | PLAY RECAP ******************************************************************************************************************
+2025-07-30 01:30:55,583 p=5294 u=root n=ansible | rmq01                      : ok=2    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-07-30 01:36:42,541 p=5371 u=root n=ansible | PLAY [Install & Setup RabbitMQ with user (Ubuntu 22.04 Compatible)] *********************************************************
+2025-07-30 01:36:42,553 p=5371 u=root n=ansible | TASK [Gathering Facts] ******************************************************************************************************
+2025-07-30 01:36:44,419 p=5371 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:36:44,434 p=5371 u=root n=ansible | TASK [Update apt cache] *****************************************************************************************************
+2025-07-30 01:36:45,415 p=5371 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:36:45,425 p=5371 u=root n=ansible | TASK [Install required dependencies] ****************************************************************************************
+2025-07-30 01:36:46,595 p=5371 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:36:46,603 p=5371 u=root n=ansible | TASK [Add RabbitMQ signing key (modern method)] *****************************************************************************
+2025-07-30 01:36:47,670 p=5371 u=root n=ansible | changed: [rmq01]
+2025-07-30 01:36:47,680 p=5371 u=root n=ansible | TASK [Add RabbitMQ GPG key to keyring] **************************************************************************************
+2025-07-30 01:36:48,122 p=5371 u=root n=ansible | changed: [rmq01]
+2025-07-30 01:36:48,131 p=5371 u=root n=ansible | TASK [Add RabbitMQ repository for Ubuntu 22.04] *****************************************************************************
+2025-07-30 01:37:47,594 p=5371 u=root n=ansible | fatal: [rmq01]: FAILED! => {"changed": false, "msg": "Failed to update apt cache: W:GPG error: https://ppa1.novemberain.com/rabbitmq/rabbitmq-server/deb/ubuntu jammy InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 9F4587F226208342, E:The repository 'https://ppa1.novemberain.com/rabbitmq/rabbitmq-server/deb/ubuntu jammy InRelease' is not signed., W:Updating from such a repository can't be done securely, and is therefore disabled by default., W:See apt-secure(8) manpage for repository creation and user configuration details., W:An error occurred during the signature verification. The repository is not updated and the previous index files will be used. GPG error: https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/deb/ubuntu jammy InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 9F4587F226208342"}
+2025-07-30 01:37:47,597 p=5371 u=root n=ansible | PLAY RECAP ******************************************************************************************************************
+2025-07-30 01:37:47,597 p=5371 u=root n=ansible | rmq01                      : ok=5    changed=2    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-07-30 01:39:44,007 p=5450 u=root n=ansible | PLAY [Install & Setup RabbitMQ with user (Ubuntu 22.04 Compatible)] *********************************************************
+2025-07-30 01:39:44,019 p=5450 u=root n=ansible | TASK [Gathering Facts] ******************************************************************************************************
+2025-07-30 01:39:46,207 p=5450 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:39:46,221 p=5450 u=root n=ansible | TASK [Update apt cache] *****************************************************************************************************
+2025-07-30 01:39:51,060 p=5450 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:39:51,070 p=5450 u=root n=ansible | TASK [Install required dependencies] ****************************************************************************************
+2025-07-30 01:39:52,233 p=5450 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:39:52,242 p=5450 u=root n=ansible | TASK [Remove any existing RabbitMQ repositories] ****************************************************************************
+2025-07-30 01:39:52,719 p=5450 u=root n=ansible | changed: [rmq01] => (item=/etc/apt/sources.list.d/rabbitmq.list)
+2025-07-30 01:39:53,014 p=5450 u=root n=ansible | ok: [rmq01] => (item=/etc/apt/sources.list.d/rabbitmq-server.list)
+2025-07-30 01:39:53,025 p=5450 u=root n=ansible | TASK [Add RabbitMQ Team GPG key (Cloudsmith)] *******************************************************************************
+2025-07-30 01:39:54,507 p=5450 u=root n=ansible | changed: [rmq01]
+2025-07-30 01:39:54,516 p=5450 u=root n=ansible | TASK [Add RabbitMQ main signing key] ****************************************************************************************
+2025-07-30 01:39:55,606 p=5450 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:39:55,614 p=5450 u=root n=ansible | TASK [Add RabbitMQ repository (Cloudsmith - official)] **********************************************************************
+2025-07-30 01:39:56,314 p=5450 u=root n=ansible | changed: [rmq01]
+2025-07-30 01:39:56,326 p=5450 u=root n=ansible | TASK [Update apt cache after adding repository] *****************************************************************************
+2025-07-30 01:40:04,478 p=5450 u=root n=ansible | changed: [rmq01]
+2025-07-30 01:40:04,488 p=5450 u=root n=ansible | TASK [Install Erlang from Ubuntu repositories (compatible version)] *********************************************************
+2025-07-30 01:40:07,266 p=5450 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:40:07,274 p=5450 u=root n=ansible | TASK [Install RabbitMQ Server] **********************************************************************************************
+2025-07-30 01:40:10,516 p=5450 u=root n=ansible | fatal: [rmq01]: FAILED! => {"cache_update_time": 1753839609, "cache_updated": true, "changed": false, "msg": "'/usr/bin/apt-get -y -o \"Dpkg::Options::=--force-confdef\" -o \"Dpkg::Options::=--force-confold\"      install 'rabbitmq-server'' failed: E: Unable to correct problems, you have held broken packages.\n", "rc": 100, "stderr": "E: Unable to correct problems, you have held broken packages.\n", "stderr_lines": ["E: Unable to correct problems, you have held broken packages."], "stdout": "Reading package lists...\nBuilding dependency tree...\nReading state information...\nSome packages could not be installed. This may mean that you have\nrequested an impossible situation or if you are using the unstable\ndistribution that some required packages have not yet been created\nor been moved out of Incoming.\nThe following information may help to resolve the situation:\n\nThe following packages have unmet dependencies:\n rabbitmq-server : Depends: erlang-base (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            erlang-base-hipe (>= 1:26.0) but it is not installable or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-crypto (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-eldap (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-inets (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-mnesia (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-os-mon (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-parsetools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-public-key (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-runtime-tools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-ssl (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-syntax-tools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-tools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-xmerl (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n", "stdout_lines": ["Reading package lists...", "Building dependency tree...", "Reading state information...", "Some packages could not be installed. This may mean that you have", "requested an impossible situation or if you are using the unstable", "distribution that some required packages have not yet been created", "or been moved out of Incoming.", "The following information may help to resolve the situation:", "", "The following packages have unmet dependencies:", " rabbitmq-server : Depends: erlang-base (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            erlang-base-hipe (>= 1:26.0) but it is not installable or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-crypto (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-eldap (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-inets (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-mnesia (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-os-mon (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-parsetools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-public-key (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-runtime-tools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-ssl (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-syntax-tools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-tools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-xmerl (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable"]}
+2025-07-30 01:40:10,518 p=5450 u=root n=ansible | PLAY RECAP ******************************************************************************************************************
+2025-07-30 01:40:10,519 p=5450 u=root n=ansible | rmq01                      : ok=9    changed=4    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-07-30 01:40:44,618 p=5557 u=root n=ansible | Starting galaxy collection install process
+2025-07-30 01:40:44,627 p=5557 u=root n=ansible | Process install dependency map
+2025-07-30 01:40:44,628 p=5557 u=root n=ansible | |
+2025-07-30 01:40:44,728 p=5557 u=root n=ansible | /
+2025-07-30 01:40:44,829 p=5557 u=root n=ansible | -
+2025-07-30 01:40:44,929 p=5557 u=root n=ansible | \
+2025-07-30 01:40:45,030 p=5557 u=root n=ansible | |
+2025-07-30 01:40:45,130 p=5557 u=root n=ansible | /
+2025-07-30 01:40:45,231 p=5557 u=root n=ansible | -
+2025-07-30 01:40:45,332 p=5557 u=root n=ansible | \
+2025-07-30 01:40:45,432 p=5557 u=root n=ansible | Starting collection install process
+2025-07-30 01:40:45,433 p=5557 u=root n=ansible | |
+2025-07-30 01:40:45,533 p=5557 u=root n=ansible | Installing 'community.rabbitmq:1.6.0' to '/root/.ansible/collections/ansible_collections/community/rabbitmq'
+2025-07-30 01:40:45,533 p=5557 u=root n=ansible | Downloading https://galaxy.ansible.com/api/v3/plugin/ansible/content/published/collections/artifacts/community-rabbitmq-1.6.0.tar.gz to /root/.ansible/tmp/ansible-local-5557edotqire/tmpfeb6hykl
+2025-07-30 01:40:45,534 p=5557 u=root n=ansible | /
+2025-07-30 01:40:45,634 p=5557 u=root n=ansible | -
+2025-07-30 01:40:45,735 p=5557 u=root n=ansible | \
+2025-07-30 01:40:45,836 p=5557 u=root n=ansible | |
+2025-07-30 01:40:45,937 p=5557 u=root n=ansible | community.rabbitmq (1.6.0) was installed successfully
+2025-07-30 01:40:52,418 p=5561 u=root n=ansible | PLAY [Install & Setup RabbitMQ with user (Ubuntu 22.04 Compatible)] *********************************************************
+2025-07-30 01:40:52,429 p=5561 u=root n=ansible | TASK [Gathering Facts] ******************************************************************************************************
+2025-07-30 01:40:53,656 p=5561 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:40:53,670 p=5561 u=root n=ansible | TASK [Update apt cache] *****************************************************************************************************
+2025-07-30 01:40:54,672 p=5561 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:40:54,682 p=5561 u=root n=ansible | TASK [Install required dependencies] ****************************************************************************************
+2025-07-30 01:40:55,834 p=5561 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:40:55,842 p=5561 u=root n=ansible | TASK [Remove any existing RabbitMQ repositories] ****************************************************************************
+2025-07-30 01:40:56,326 p=5561 u=root n=ansible | ok: [rmq01] => (item=/etc/apt/sources.list.d/rabbitmq.list)
+2025-07-30 01:40:56,626 p=5561 u=root n=ansible | changed: [rmq01] => (item=/etc/apt/sources.list.d/rabbitmq-server.list)
+2025-07-30 01:40:56,636 p=5561 u=root n=ansible | TASK [Add RabbitMQ Team GPG key (Cloudsmith)] *******************************************************************************
+2025-07-30 01:40:57,408 p=5561 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:40:57,418 p=5561 u=root n=ansible | TASK [Add RabbitMQ main signing key] ****************************************************************************************
+2025-07-30 01:40:58,460 p=5561 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:40:58,469 p=5561 u=root n=ansible | TASK [Add RabbitMQ repository (Cloudsmith - official)] **********************************************************************
+2025-07-30 01:40:59,163 p=5561 u=root n=ansible | changed: [rmq01]
+2025-07-30 01:40:59,174 p=5561 u=root n=ansible | TASK [Update apt cache after adding repository] *****************************************************************************
+2025-07-30 01:41:13,608 p=5561 u=root n=ansible | changed: [rmq01]
+2025-07-30 01:41:13,616 p=5561 u=root n=ansible | TASK [Install Erlang from Ubuntu repositories (compatible version)] *********************************************************
+2025-07-30 01:41:16,320 p=5561 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:41:16,328 p=5561 u=root n=ansible | TASK [Install RabbitMQ Server] **********************************************************************************************
+2025-07-30 01:41:19,554 p=5561 u=root n=ansible | fatal: [rmq01]: FAILED! => {"cache_update_time": 1753839678, "cache_updated": true, "changed": false, "msg": "'/usr/bin/apt-get -y -o \"Dpkg::Options::=--force-confdef\" -o \"Dpkg::Options::=--force-confold\"      install 'rabbitmq-server'' failed: E: Unable to correct problems, you have held broken packages.\n", "rc": 100, "stderr": "E: Unable to correct problems, you have held broken packages.\n", "stderr_lines": ["E: Unable to correct problems, you have held broken packages."], "stdout": "Reading package lists...\nBuilding dependency tree...\nReading state information...\nSome packages could not be installed. This may mean that you have\nrequested an impossible situation or if you are using the unstable\ndistribution that some required packages have not yet been created\nor been moved out of Incoming.\nThe following information may help to resolve the situation:\n\nThe following packages have unmet dependencies:\n rabbitmq-server : Depends: erlang-base (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            erlang-base-hipe (>= 1:26.0) but it is not installable or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-crypto (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-eldap (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-inets (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-mnesia (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-os-mon (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-parsetools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-public-key (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-runtime-tools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-ssl (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-syntax-tools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-tools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-xmerl (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n", "stdout_lines": ["Reading package lists...", "Building dependency tree...", "Reading state information...", "Some packages could not be installed. This may mean that you have", "requested an impossible situation or if you are using the unstable", "distribution that some required packages have not yet been created", "or been moved out of Incoming.", "The following information may help to resolve the situation:", "", "The following packages have unmet dependencies:", " rabbitmq-server : Depends: erlang-base (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            erlang-base-hipe (>= 1:26.0) but it is not installable or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-crypto (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-eldap (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-inets (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-mnesia (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-os-mon (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-parsetools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-public-key (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-runtime-tools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-ssl (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-syntax-tools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-tools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-xmerl (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable"]}
+2025-07-30 01:41:19,557 p=5561 u=root n=ansible | PLAY RECAP ******************************************************************************************************************
+2025-07-30 01:41:19,557 p=5561 u=root n=ansible | rmq01                      : ok=9    changed=3    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-07-30 01:41:52,319 p=5677 u=root n=ansible | PLAY [Install & Setup RabbitMQ with user (Ubuntu 22.04 Compatible)] *********************************************************
+2025-07-30 01:41:52,330 p=5677 u=root n=ansible | TASK [Gathering Facts] ******************************************************************************************************
+2025-07-30 01:41:53,539 p=5677 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:41:53,553 p=5677 u=root n=ansible | TASK [Update apt cache] *****************************************************************************************************
+2025-07-30 01:41:54,543 p=5677 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:41:54,553 p=5677 u=root n=ansible | TASK [Install required dependencies] ****************************************************************************************
+2025-07-30 01:41:55,683 p=5677 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:41:55,692 p=5677 u=root n=ansible | TASK [Add RabbitMQ signing key (Cloudsmith official)] ***********************************************************************
+2025-07-30 01:41:56,415 p=5677 u=root n=ansible | changed: [rmq01]
+2025-07-30 01:41:56,424 p=5677 u=root n=ansible | TASK [Add RabbitMQ APT repository (Ubuntu 22.04 - jammy)] *******************************************************************
+2025-07-30 01:42:44,185 p=5677 u=root n=ansible | fatal: [rmq01]: FAILED! => {"changed": false, "msg": "Failed to update apt cache: unknown reason"}
+2025-07-30 01:42:44,188 p=5677 u=root n=ansible | PLAY RECAP ******************************************************************************************************************
+2025-07-30 01:42:44,188 p=5677 u=root n=ansible | rmq01                      : ok=4    changed=1    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-07-30 01:46:40,661 p=5758 u=root n=ansible | PLAY [Install & Setup RabbitMQ with user (Ubuntu 22.04 Compatible)] *********************************************************
+2025-07-30 01:46:40,673 p=5758 u=root n=ansible | TASK [Gathering Facts] ******************************************************************************************************
+2025-07-30 01:46:42,780 p=5758 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:46:42,793 p=5758 u=root n=ansible | TASK [Update apt cache] *****************************************************************************************************
+2025-07-30 01:46:47,490 p=5758 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:46:47,499 p=5758 u=root n=ansible | TASK [Install required dependencies] ****************************************************************************************
+2025-07-30 01:46:48,622 p=5758 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:46:48,631 p=5758 u=root n=ansible | TASK [Remove any existing RabbitMQ repositories] ****************************************************************************
+2025-07-30 01:46:49,107 p=5758 u=root n=ansible | ok: [rmq01] => (item=/etc/apt/sources.list.d/rabbitmq.list)
+2025-07-30 01:46:49,401 p=5758 u=root n=ansible | changed: [rmq01] => (item=/etc/apt/sources.list.d/rabbitmq-server.list)
+2025-07-30 01:46:49,411 p=5758 u=root n=ansible | TASK [Add RabbitMQ Team GPG key (Cloudsmith)] *******************************************************************************
+2025-07-30 01:46:50,170 p=5758 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:46:50,180 p=5758 u=root n=ansible | TASK [Add RabbitMQ main signing key] ****************************************************************************************
+2025-07-30 01:46:51,234 p=5758 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:46:51,243 p=5758 u=root n=ansible | TASK [Add RabbitMQ repository (Cloudsmith - official)] **********************************************************************
+2025-07-30 01:46:51,935 p=5758 u=root n=ansible | changed: [rmq01]
+2025-07-30 01:46:51,944 p=5758 u=root n=ansible | TASK [Update apt cache after adding repository] *****************************************************************************
+2025-07-30 01:46:59,804 p=5758 u=root n=ansible | changed: [rmq01]
+2025-07-30 01:46:59,813 p=5758 u=root n=ansible | TASK [Install Erlang from Ubuntu repositories (compatible version)] *********************************************************
+2025-07-30 01:47:02,588 p=5758 u=root n=ansible | ok: [rmq01]
+2025-07-30 01:47:02,596 p=5758 u=root n=ansible | TASK [Install RabbitMQ Server] **********************************************************************************************
+2025-07-30 01:47:05,851 p=5758 u=root n=ansible | fatal: [rmq01]: FAILED! => {"cache_update_time": 1753840024, "cache_updated": true, "changed": false, "msg": "'/usr/bin/apt-get -y -o \"Dpkg::Options::=--force-confdef\" -o \"Dpkg::Options::=--force-confold\"      install 'rabbitmq-server'' failed: E: Unable to correct problems, you have held broken packages.\n", "rc": 100, "stderr": "E: Unable to correct problems, you have held broken packages.\n", "stderr_lines": ["E: Unable to correct problems, you have held broken packages."], "stdout": "Reading package lists...\nBuilding dependency tree...\nReading state information...\nSome packages could not be installed. This may mean that you have\nrequested an impossible situation or if you are using the unstable\ndistribution that some required packages have not yet been created\nor been moved out of Incoming.\nThe following information may help to resolve the situation:\n\nThe following packages have unmet dependencies:\n rabbitmq-server : Depends: erlang-base (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            erlang-base-hipe (>= 1:26.0) but it is not installable or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-crypto (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-eldap (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-inets (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-mnesia (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-os-mon (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-parsetools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-public-key (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-runtime-tools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-ssl (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-syntax-tools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-tools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n                   Depends: erlang-xmerl (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or\n                            esl-erlang (>= 1:26.0) but it is not installable\n", "stdout_lines": ["Reading package lists...", "Building dependency tree...", "Reading state information...", "Some packages could not be installed. This may mean that you have", "requested an impossible situation or if you are using the unstable", "distribution that some required packages have not yet been created", "or been moved out of Incoming.", "The following information may help to resolve the situation:", "", "The following packages have unmet dependencies:", " rabbitmq-server : Depends: erlang-base (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            erlang-base-hipe (>= 1:26.0) but it is not installable or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-crypto (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-eldap (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-inets (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-mnesia (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-os-mon (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-parsetools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-public-key (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-runtime-tools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-ssl (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-syntax-tools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-tools (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable", "                   Depends: erlang-xmerl (>= 1:26.0) but 1:24.2.1+dfsg-1ubuntu0.5 is to be installed or", "                            esl-erlang (>= 1:26.0) but it is not installable"]}
+2025-07-30 01:47:05,853 p=5758 u=root n=ansible | PLAY RECAP ******************************************************************************************************************
+2025-07-30 01:47:05,854 p=5758 u=root n=ansible | rmq01                      : ok=9    changed=3    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-07-30 02:13:35,612 p=5911 u=root n=ansible | PLAY [Install & Setup RabbitMQ with user (Ubuntu 22.04 Compatible)] *********************************************************
+2025-07-30 02:13:35,622 p=5911 u=root n=ansible | TASK [Gathering Facts] ******************************************************************************************************
+2025-07-30 02:13:37,805 p=5911 u=root n=ansible | ok: [rmq01]
+2025-07-30 02:13:37,819 p=5911 u=root n=ansible | TASK [Update apt cache] *****************************************************************************************************
+2025-07-30 02:13:38,811 p=5911 u=root n=ansible | ok: [rmq01]
+2025-07-30 02:13:38,819 p=5911 u=root n=ansible | TASK [Install required dependencies] ****************************************************************************************
+2025-07-30 02:13:39,959 p=5911 u=root n=ansible | ok: [rmq01]
+2025-07-30 02:13:39,967 p=5911 u=root n=ansible | TASK [Remove any existing RabbitMQ repositories] ****************************************************************************
+2025-07-30 02:13:40,445 p=5911 u=root n=ansible | ok: [rmq01] => (item=/etc/apt/sources.list.d/rabbitmq.list)
+2025-07-30 02:13:40,741 p=5911 u=root n=ansible | changed: [rmq01] => (item=/etc/apt/sources.list.d/rabbitmq-server.list)
+2025-07-30 02:13:40,751 p=5911 u=root n=ansible | TASK [Add Erlang Solutions GPG key] *****************************************************************************************
+2025-07-30 02:13:41,782 p=5911 u=root n=ansible | fatal: [rmq01]: FAILED! => {"changed": false, "msg": "Failed to download key at https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc: HTTP Error 504: Gateway Time-out"}
+2025-07-30 02:13:41,785 p=5911 u=root n=ansible | PLAY RECAP ******************************************************************************************************************
+2025-07-30 02:13:41,785 p=5911 u=root n=ansible | rmq01                      : ok=4    changed=1    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-07-30 02:16:18,581 p=5988 u=root n=ansible | PLAY [Install & Setup RabbitMQ with user (Ubuntu 22.04 Compatible)] *********************************************************
+2025-07-30 02:16:18,592 p=5988 u=root n=ansible | TASK [Gathering Facts] ******************************************************************************************************
+2025-07-30 02:16:20,467 p=5988 u=root n=ansible | ok: [rmq01]
+2025-07-30 02:16:20,481 p=5988 u=root n=ansible | TASK [Update apt cache] *****************************************************************************************************
+2025-07-30 02:16:25,390 p=5988 u=root n=ansible | ok: [rmq01]
+2025-07-30 02:16:25,400 p=5988 u=root n=ansible | TASK [Install required dependencies] ****************************************************************************************
+2025-07-30 02:16:26,544 p=5988 u=root n=ansible | ok: [rmq01]
+2025-07-30 02:16:26,553 p=5988 u=root n=ansible | TASK [Remove any existing RabbitMQ repositories] ****************************************************************************
+2025-07-30 02:16:27,028 p=5988 u=root n=ansible | ok: [rmq01] => (item=/etc/apt/sources.list.d/rabbitmq.list)
+2025-07-30 02:16:27,317 p=5988 u=root n=ansible | ok: [rmq01] => (item=/etc/apt/sources.list.d/rabbitmq-server.list)
+2025-07-30 02:16:27,327 p=5988 u=root n=ansible | TASK [Install Erlang from Ubuntu repositories (base packages)] **************************************************************
+2025-07-30 02:16:33,630 p=5988 u=root n=ansible | ok: [rmq01]
+2025-07-30 02:16:33,640 p=5988 u=root n=ansible | TASK [Download compatible RabbitMQ version (3.8.x series)] ******************************************************************
+2025-07-30 02:16:35,377 p=5988 u=root n=ansible | changed: [rmq01]
+2025-07-30 02:16:35,386 p=5988 u=root n=ansible | TASK [Install RabbitMQ from downloaded package (force dependencies)] ********************************************************
+2025-07-30 02:26:58,282 p=5988 u=root n=ansible | changed: [rmq01]
+2025-07-30 02:26:58,292 p=5988 u=root n=ansible | TASK [Check if RabbitMQ was installed successfully] *************************************************************************
+2025-07-30 02:26:58,623 p=5988 u=root n=ansible | changed: [rmq01]
+2025-07-30 02:26:58,633 p=5988 u=root n=ansible | TASK [Show installation result] *********************************************************************************************
+2025-07-30 02:26:58,670 p=5988 u=root n=ansible | ok: [rmq01] => {
+    "msg": "RabbitMQ installation: SUCCESS"
+}
+2025-07-30 02:26:58,678 p=5988 u=root n=ansible | TASK [Install RabbitMQ Server] **********************************************************************************************
+2025-07-30 02:27:05,154 p=5988 u=root n=ansible | ok: [rmq01]
+2025-07-30 02:27:05,162 p=5988 u=root n=ansible | TASK [Start & Enable RabbitMQ service] **************************************************************************************
+2025-07-30 02:27:06,462 p=5988 u=root n=ansible | ok: [rmq01]
+2025-07-30 02:27:06,471 p=5988 u=root n=ansible | TASK [Wait for RabbitMQ to be ready] ****************************************************************************************
+2025-07-30 02:27:11,905 p=5988 u=root n=ansible | ok: [rmq01]
+2025-07-30 02:27:11,913 p=5988 u=root n=ansible | TASK [Configure RabbitMQ (modern format)] ***********************************************************************************
+2025-07-30 02:27:12,804 p=5988 u=root n=ansible | changed: [rmq01]
+2025-07-30 02:27:12,813 p=5988 u=root n=ansible | TASK [Enable RabbitMQ management plugin] ************************************************************************************
+2025-07-30 02:27:23,851 p=5988 u=root n=ansible | changed: [rmq01]
+2025-07-30 02:27:23,860 p=5988 u=root n=ansible | TASK [Create RabbitMQ admin user] *******************************************************************************************
+2025-07-30 02:27:31,377 p=5988 u=root n=ansible | changed: [rmq01]
+2025-07-30 02:27:31,386 p=5988 u=root n=ansible | RUNNING HANDLER [Restart RMQ] ***********************************************************************************************
+2025-07-30 02:27:41,907 p=5988 u=root n=ansible | changed: [rmq01]
+2025-07-30 02:27:41,916 p=5988 u=root n=ansible | PLAY RECAP ******************************************************************************************************************
+2025-07-30 02:27:41,916 p=5988 u=root n=ansible | rmq01                      : ok=16   changed=7    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-30 02:41:15,265 p=6193 u=root n=ansible | PLAY [Generate artifact, copy artifact & sql file to files directory] *******************************************************
+2025-07-30 02:41:15,275 p=6193 u=root n=ansible | TASK [Gathering Facts] ******************************************************************************************************
+2025-07-30 02:41:16,375 p=6193 u=root n=ansible | ok: [localhost]
+2025-07-30 02:41:16,389 p=6193 u=root n=ansible | TASK [Install  jdk, maven, git] *********************************************************************************************
+2025-07-30 02:41:27,131 p=6193 u=root n=ansible | ok: [localhost] => (item=git)
+2025-07-30 02:41:59,549 p=6193 u=root n=ansible | changed: [localhost] => (item=openjdk-8-jdk)
+2025-07-30 02:42:11,627 p=6193 u=root n=ansible | changed: [localhost] => (item=maven)
+2025-07-30 02:42:11,646 p=6193 u=root n=ansible | TASK [Clone source code from github] ****************************************************************************************
+2025-07-30 02:42:20,062 p=6193 u=root n=ansible | changed: [localhost]
+2025-07-30 02:42:20,071 p=6193 u=root n=ansible | TASK [mvn install command to build artifact] ********************************************************************************
+2025-07-30 02:43:03,995 p=6193 u=root n=ansible | changed: [localhost]
+2025-07-30 02:43:04,029 p=6193 u=root n=ansible | TASK [Copy artifacts to files directory] ************************************************************************************
+2025-07-30 02:43:05,852 p=6193 u=root n=ansible | changed: [localhost] => (item=/root/vpro-stack/vprofile-project/provision-stack/Vprofile-repo/target/vprofile-v2.war)
+2025-07-30 02:43:05,863 p=6193 u=root n=ansible | TASK [Copy SQL file to files directory] *************************************************************************************
+2025-07-30 02:43:06,485 p=6193 u=root n=ansible | ok: [localhost]
+2025-07-30 02:43:06,503 p=6193 u=root n=ansible | PLAY RECAP ******************************************************************************************************************
+2025-07-30 02:43:06,504 p=6193 u=root n=ansible | localhost                  : ok=6    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-30 02:44:55,423 p=10561 u=root n=ansible | PLAY [Setup Tomcat8 & Deploy Artifact] **************************************************************************************
+2025-07-30 02:44:55,449 p=10561 u=root n=ansible | TASK [Gathering Facts] ******************************************************************************************************
+2025-07-30 02:44:57,389 p=10561 u=root n=ansible | ok: [app01]
+2025-07-30 02:44:57,403 p=10561 u=root n=ansible | TASK [Install JDK on Ubuntu 18/20] ******************************************************************************************
+2025-07-30 02:46:06,098 p=10561 u=root n=ansible | changed: [app01]
+2025-07-30 02:46:06,107 p=10561 u=root n=ansible | TASK [Download Tomcat Tar Ball/Binaries] ************************************************************************************
+2025-07-30 02:46:34,924 p=10561 u=root n=ansible | changed: [app01]
+2025-07-30 02:46:34,934 p=10561 u=root n=ansible | TASK [Add tomcat group] *****************************************************************************************************
+2025-07-30 02:46:35,407 p=10561 u=root n=ansible | changed: [app01]
+2025-07-30 02:46:35,416 p=10561 u=root n=ansible | TASK [Add tomcat user] ******************************************************************************************************
+2025-07-30 02:46:35,979 p=10561 u=root n=ansible | changed: [app01]
+2025-07-30 02:46:35,988 p=10561 u=root n=ansible | TASK [file] *****************************************************************************************************************
+2025-07-30 02:46:36,443 p=10561 u=root n=ansible | changed: [app01]
+2025-07-30 02:46:36,454 p=10561 u=root n=ansible | TASK [Extract tomcat] *******************************************************************************************************
+2025-07-30 02:46:37,910 p=10561 u=root n=ansible | changed: [app01]
+2025-07-30 02:46:37,920 p=10561 u=root n=ansible | TASK [debug] ****************************************************************************************************************
+2025-07-30 02:46:37,957 p=10561 u=root n=ansible | ok: [app01] => {
+    "msg": "apache-tomcat-8.5.37"
+}
+2025-07-30 02:46:37,991 p=10561 u=root n=ansible | TASK [Synchronize /tmp/tomcat8/tomcat_cont /usr/local/tomcat8.] *************************************************************
+2025-07-30 02:46:38,737 p=10561 u=root n=ansible | changed: [app01 -> 172.20.4.17]
+2025-07-30 02:46:38,746 p=10561 u=root n=ansible | TASK [Change ownership of /usr/local/tomcat8] *******************************************************************************
+2025-07-30 02:46:39,119 p=10561 u=root n=ansible | changed: [app01]
+2025-07-30 02:46:39,129 p=10561 u=root n=ansible | TASK [Setup tomcat SVC file on ubuntu 16 and 18] ****************************************************************************
+2025-07-30 02:46:39,860 p=10561 u=root n=ansible | changed: [app01]
+2025-07-30 02:46:39,870 p=10561 u=root n=ansible | TASK [just force systemd to reread configs (2.4 and above)] *****************************************************************
+2025-07-30 02:46:40,956 p=10561 u=root n=ansible | ok: [app01]
+2025-07-30 02:46:40,966 p=10561 u=root n=ansible | TASK [Start & Enable tomcat SVC] ********************************************************************************************
+2025-07-30 02:46:42,100 p=10561 u=root n=ansible | changed: [app01]
+2025-07-30 02:46:42,109 p=10561 u=root n=ansible | TASK [stat] *****************************************************************************************************************
+2025-07-30 02:46:42,719 p=10561 u=root n=ansible | ok: [app01]
+2025-07-30 02:46:42,728 p=10561 u=root n=ansible | TASK [Stop tomcat8 svc] *****************************************************************************************************
+2025-07-30 02:46:44,317 p=10561 u=root n=ansible | changed: [app01]
+2025-07-30 02:46:44,326 p=10561 u=root n=ansible | TASK [Archive ROOT dir with timestamp] **************************************************************************************
+2025-07-30 02:46:44,803 p=10561 u=root n=ansible | changed: [app01]
+2025-07-30 02:46:44,814 p=10561 u=root n=ansible | TASK [copy ROOT dir with old_ROOT name] *************************************************************************************
+2025-07-30 02:46:45,264 p=10561 u=root n=ansible | changed: [app01]
+2025-07-30 02:46:45,274 p=10561 u=root n=ansible | TASK [Delete current artifact] **********************************************************************************************
+2025-07-30 02:46:45,599 p=10561 u=root n=ansible | changed: [app01] => (item=/usr/local/tomcat8/webapps/ROOT)
+2025-07-30 02:46:45,891 p=10561 u=root n=ansible | ok: [app01] => (item=/usr/local/tomcat8/webapps/ROOT.war)
+2025-07-30 02:46:45,900 p=10561 u=root n=ansible | TASK [Deploy vprofile artifact] *********************************************************************************************
+2025-07-30 02:46:49,049 p=10561 u=root n=ansible | changed: [app01]
+2025-07-30 02:46:49,057 p=10561 u=root n=ansible | TASK [Start tomcat8 svc] ****************************************************************************************************
+2025-07-30 02:46:49,575 p=10561 u=root n=ansible | changed: [app01]
+2025-07-30 02:46:49,583 p=10561 u=root n=ansible | TASK [Wait until ROOT.war is extracted to ROOT directory] *******************************************************************
+2025-07-30 02:46:52,262 p=10561 u=root n=ansible | ok: [app01]
+2025-07-30 02:46:52,270 p=10561 u=root n=ansible | TASK [Deploy web configuration file] ****************************************************************************************
+2025-07-30 02:46:53,428 p=10561 u=root n=ansible | changed: [app01]
+2025-07-30 02:46:53,435 p=10561 u=root n=ansible | RUNNING HANDLER [Restart Tomcat] ********************************************************************************************
+2025-07-30 02:46:55,646 p=10561 u=root n=ansible | changed: [app01]
+2025-07-30 02:46:55,657 p=10561 u=root n=ansible | PLAY RECAP ******************************************************************************************************************
+2025-07-30 02:46:55,657 p=10561 u=root n=ansible | app01                      : ok=23   changed=18   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-30 02:53:01,128 p=10817 u=root n=ansible | PLAY [Generate artifact, copy artifact & sql file to files directory] *******************************************************
+2025-07-30 02:53:01,139 p=10817 u=root n=ansible | TASK [Gathering Facts] ******************************************************************************************************
+2025-07-30 02:53:02,381 p=10817 u=root n=ansible | ok: [localhost]
+2025-07-30 02:53:02,395 p=10817 u=root n=ansible | TASK [Install  jdk, maven, git] *********************************************************************************************
+2025-07-30 02:53:05,802 p=10817 u=root n=ansible | ok: [localhost] => (item=git)
+2025-07-30 02:53:08,635 p=10817 u=root n=ansible | ok: [localhost] => (item=openjdk-8-jdk)
+2025-07-30 02:53:11,433 p=10817 u=root n=ansible | ok: [localhost] => (item=maven)
+2025-07-30 02:53:11,444 p=10817 u=root n=ansible | TASK [Clone source code from github] ****************************************************************************************
+2025-07-30 02:53:12,521 p=10817 u=root n=ansible | ok: [localhost]
+2025-07-30 02:53:12,531 p=10817 u=root n=ansible | TASK [mvn install command to build artifact] ********************************************************************************
+2025-07-30 02:53:12,563 p=10817 u=root n=ansible | skipping: [localhost]
+2025-07-30 02:53:12,574 p=10817 u=root n=ansible | TASK [Copy artifacts to files directory] ************************************************************************************
+2025-07-30 02:53:13,484 p=10817 u=root n=ansible | ok: [localhost] => (item=/root/vpro-stack/vprofile-project/provision-stack/Vprofile-repo/target/vprofile-v2.war)
+2025-07-30 02:53:13,495 p=10817 u=root n=ansible | TASK [Copy SQL file to files directory] *************************************************************************************
+2025-07-30 02:53:13,946 p=10817 u=root n=ansible | ok: [localhost]
+2025-07-30 02:53:13,964 p=10817 u=root n=ansible | PLAY [Set host to ip mapping in /etc/hosts file of all the instances in the stack] ******************************************
+2025-07-30 02:53:13,968 p=10817 u=root n=ansible | TASK [Gathering Facts] ******************************************************************************************************
+2025-07-30 02:53:15,520 p=10817 u=root n=ansible | ok: [cntl]
+2025-07-30 02:53:15,873 p=10817 u=root n=ansible | ok: [web01]
+2025-07-30 02:53:16,010 p=10817 u=root n=ansible | ok: [mc01]
+2025-07-30 02:53:16,101 p=10817 u=root n=ansible | ok: [app01]
+2025-07-30 02:53:16,108 p=10817 u=root n=ansible | ok: [rmq01]
+2025-07-30 02:53:17,051 p=10817 u=root n=ansible | ok: [db01]
+2025-07-30 02:53:17,068 p=10817 u=root n=ansible | TASK [Import VPC setup Variable] ********************************************************************************************
+2025-07-30 02:53:17,120 p=10817 u=root n=ansible | ok: [cntl]
+2025-07-30 02:53:17,144 p=10817 u=root n=ansible | ok: [web01]
+2025-07-30 02:53:17,168 p=10817 u=root n=ansible | ok: [app01]
+2025-07-30 02:53:17,214 p=10817 u=root n=ansible | ok: [rmq01]
+2025-07-30 02:53:17,216 p=10817 u=root n=ansible | ok: [mc01]
+2025-07-30 02:53:17,225 p=10817 u=root n=ansible | ok: [db01]
+2025-07-30 02:53:17,235 p=10817 u=root n=ansible | TASK [Update hosts file for all the hosts] **********************************************************************************
+2025-07-30 02:53:18,137 p=10817 u=root n=ansible | ok: [app01]
+2025-07-30 02:53:18,140 p=10817 u=root n=ansible | ok: [cntl]
+2025-07-30 02:53:18,141 p=10817 u=root n=ansible | ok: [web01]
+2025-07-30 02:53:18,142 p=10817 u=root n=ansible | ok: [mc01]
+2025-07-30 02:53:18,143 p=10817 u=root n=ansible | ok: [rmq01]
+2025-07-30 02:53:18,459 p=10817 u=root n=ansible | ok: [db01]
+2025-07-30 02:53:18,479 p=10817 u=root n=ansible | PLAY [Setup Mysql with accounts db and remote login] ************************************************************************
+2025-07-30 02:53:18,494 p=10817 u=root n=ansible | TASK [Installing Mysql Service and dependencies] ****************************************************************************
+2025-07-30 02:54:28,671 p=10817 u=root n=ansible | changed: [db01] => (item=mysql-server)
+2025-07-30 02:54:35,675 p=10817 u=root n=ansible | changed: [db01] => (item=mysql-client)
+2025-07-30 02:54:36,882 p=10817 u=root n=ansible | failed: [db01] (item=python-mysqldb) => {"ansible_loop_var": "item", "changed": false, "item": "python-mysqldb", "msg": "No package matching 'python-mysqldb' is available"}
+2025-07-30 02:54:43,971 p=10817 u=root n=ansible | changed: [db01] => (item=python3-mysqldb)
+2025-07-30 02:54:58,052 p=10817 u=root n=ansible | changed: [db01] => (item=libmysqlclient-dev)
+2025-07-30 02:54:58,060 p=10817 u=root n=ansible | ...ignoring
+2025-07-30 02:54:58,068 p=10817 u=root n=ansible | TASK [Start and enable mysql service] ***************************************************************************************
+2025-07-30 02:54:59,011 p=10817 u=root n=ansible | ok: [db01]
+2025-07-30 02:54:59,021 p=10817 u=root n=ansible | TASK [creating mysql user] **************************************************************************************************
+2025-07-30 02:54:59,824 p=10817 u=root n=ansible | changed: [db01]
+2025-07-30 02:54:59,832 p=10817 u=root n=ansible | TASK [Creating accounts DB] *************************************************************************************************
+2025-07-30 02:55:00,400 p=10817 u=root n=ansible | changed: [db01]
+2025-07-30 02:55:00,410 p=10817 u=root n=ansible | TASK [Enable remote login to mysql svc] *************************************************************************************
+2025-07-30 02:55:00,895 p=10817 u=root n=ansible | changed: [db01]
+2025-07-30 02:55:00,905 p=10817 u=root n=ansible | RUNNING HANDLER [Restart mysql] *********************************************************************************************
+2025-07-30 02:55:03,733 p=10817 u=root n=ansible | changed: [db01]
+2025-07-30 02:55:03,743 p=10817 u=root n=ansible | PLAY [Deploy SQL file on accounts db] ***************************************************************************************
+2025-07-30 02:55:03,757 p=10817 u=root n=ansible | TASK [Copy SQL to dbsrv] ****************************************************************************************************
+2025-07-30 02:55:04,650 p=10817 u=root n=ansible | changed: [db01]
+2025-07-30 02:55:04,660 p=10817 u=root n=ansible | TASK [Restoring DB] *********************************************************************************************************
+2025-07-30 02:55:05,271 p=10817 u=root n=ansible | changed: [db01]
+2025-07-30 02:55:05,279 p=10817 u=root n=ansible | RUNNING HANDLER [Restart mysql] *********************************************************************************************
+2025-07-30 02:55:08,589 p=10817 u=root n=ansible | changed: [db01]
+2025-07-30 02:55:08,599 p=10817 u=root n=ansible | PLAY [Install Memcache, Start & enable SVC] *********************************************************************************
+2025-07-30 02:55:08,613 p=10817 u=root n=ansible | TASK [Install Memcache] *****************************************************************************************************
+2025-07-30 02:55:52,112 p=10817 u=root n=ansible | changed: [mc01]
+2025-07-30 02:55:52,121 p=10817 u=root n=ansible | TASK [Start & Enable Memcache] **********************************************************************************************
+2025-07-30 02:55:52,675 p=10817 u=root n=ansible | ok: [mc01]
+2025-07-30 02:55:52,683 p=10817 u=root n=ansible | TASK [Enable remote login to memecache] *************************************************************************************
+2025-07-30 02:55:53,014 p=10817 u=root n=ansible | changed: [mc01]
+2025-07-30 02:55:53,022 p=10817 u=root n=ansible | RUNNING HANDLER [Restart memcached] *****************************************************************************************
+2025-07-30 02:55:54,153 p=10817 u=root n=ansible | changed: [mc01]
+2025-07-30 02:55:54,163 p=10817 u=root n=ansible | PLAY [Install & Setup RabbitMQ with user (Ubuntu 22.04 Compatible)] *********************************************************
+2025-07-30 02:55:54,171 p=10817 u=root n=ansible | TASK [Gathering Facts] ******************************************************************************************************
+2025-07-30 02:55:55,713 p=10817 u=root n=ansible | ok: [rmq01]
+2025-07-30 02:55:55,727 p=10817 u=root n=ansible | TASK [Update apt cache] *****************************************************************************************************
+2025-07-30 02:55:56,605 p=10817 u=root n=ansible | ok: [rmq01]
+2025-07-30 02:55:56,615 p=10817 u=root n=ansible | TASK [Install required dependencies] ****************************************************************************************
+2025-07-30 02:55:57,736 p=10817 u=root n=ansible | ok: [rmq01]
+2025-07-30 02:55:57,746 p=10817 u=root n=ansible | TASK [Remove any existing RabbitMQ repositories] ****************************************************************************
+2025-07-30 02:55:58,235 p=10817 u=root n=ansible | ok: [rmq01] => (item=/etc/apt/sources.list.d/rabbitmq.list)
+2025-07-30 02:55:58,532 p=10817 u=root n=ansible | ok: [rmq01] => (item=/etc/apt/sources.list.d/rabbitmq-server.list)
+2025-07-30 02:55:58,542 p=10817 u=root n=ansible | TASK [Install Erlang from Ubuntu repositories (base packages)] **************************************************************
+2025-07-30 02:56:01,173 p=10817 u=root n=ansible | ok: [rmq01]
+2025-07-30 02:56:01,181 p=10817 u=root n=ansible | TASK [Download compatible RabbitMQ version (3.8.x series)] ******************************************************************
+2025-07-30 02:56:01,931 p=10817 u=root n=ansible | ok: [rmq01]
+2025-07-30 02:56:01,942 p=10817 u=root n=ansible | TASK [Install RabbitMQ from downloaded package (force dependencies)] ********************************************************
+2025-07-30 02:56:15,601 p=10817 u=root n=ansible | changed: [rmq01]
+2025-07-30 02:56:15,612 p=10817 u=root n=ansible | TASK [Check if RabbitMQ was installed successfully] *************************************************************************
+2025-07-30 02:56:15,939 p=10817 u=root n=ansible | changed: [rmq01]
+2025-07-30 02:56:15,948 p=10817 u=root n=ansible | TASK [Show installation result] *********************************************************************************************
+2025-07-30 02:56:15,986 p=10817 u=root n=ansible | ok: [rmq01] => {
+    "msg": "RabbitMQ installation: SUCCESS"
+}
+2025-07-30 02:56:15,996 p=10817 u=root n=ansible | TASK [Install RabbitMQ Server] **********************************************************************************************
+2025-07-30 02:56:20,409 p=10817 u=root n=ansible | ok: [rmq01]
+2025-07-30 02:56:20,418 p=10817 u=root n=ansible | TASK [Start & Enable RabbitMQ service] **************************************************************************************
+2025-07-30 02:56:21,511 p=10817 u=root n=ansible | ok: [rmq01]
+2025-07-30 02:56:21,522 p=10817 u=root n=ansible | TASK [Wait for RabbitMQ to be ready] ****************************************************************************************
+2025-07-30 02:56:26,988 p=10817 u=root n=ansible | ok: [rmq01]
+2025-07-30 02:56:26,997 p=10817 u=root n=ansible | TASK [Configure RabbitMQ (modern format)] ***********************************************************************************
+2025-07-30 02:56:27,609 p=10817 u=root n=ansible | ok: [rmq01]
+2025-07-30 02:56:27,617 p=10817 u=root n=ansible | TASK [Enable RabbitMQ management plugin] ************************************************************************************
+2025-07-30 02:56:31,812 p=10817 u=root n=ansible | ok: [rmq01]
+2025-07-30 02:56:31,822 p=10817 u=root n=ansible | TASK [Create RabbitMQ admin user] *******************************************************************************************
+2025-07-30 02:56:36,509 p=10817 u=root n=ansible | ok: [rmq01]
+2025-07-30 02:56:36,527 p=10817 u=root n=ansible | PLAY [Setup Tomcat8 & Deploy Artifact] **************************************************************************************
+2025-07-30 02:56:36,537 p=10817 u=root n=ansible | TASK [Gathering Facts] ******************************************************************************************************
+2025-07-30 02:56:38,002 p=10817 u=root n=ansible | ok: [app01]
+2025-07-30 02:56:38,017 p=10817 u=root n=ansible | TASK [Install JDK on Ubuntu 18/20] ******************************************************************************************
+2025-07-30 02:56:47,836 p=10817 u=root n=ansible | ok: [app01]
+2025-07-30 02:56:47,845 p=10817 u=root n=ansible | TASK [Download Tomcat Tar Ball/Binaries] ************************************************************************************
+2025-07-30 02:56:48,729 p=10817 u=root n=ansible | ok: [app01]
+2025-07-30 02:56:48,739 p=10817 u=root n=ansible | TASK [Add tomcat group] *****************************************************************************************************
+2025-07-30 02:56:49,198 p=10817 u=root n=ansible | ok: [app01]
+2025-07-30 02:56:49,208 p=10817 u=root n=ansible | TASK [Add tomcat user] ******************************************************************************************************
+2025-07-30 02:56:49,771 p=10817 u=root n=ansible | ok: [app01]
+2025-07-30 02:56:49,780 p=10817 u=root n=ansible | TASK [file] *****************************************************************************************************************
+2025-07-30 02:56:50,092 p=10817 u=root n=ansible | ok: [app01]
+2025-07-30 02:56:50,101 p=10817 u=root n=ansible | TASK [Extract tomcat] *******************************************************************************************************
+2025-07-30 02:56:51,803 p=10817 u=root n=ansible | ok: [app01]
+2025-07-30 02:56:51,813 p=10817 u=root n=ansible | TASK [debug] ****************************************************************************************************************
+2025-07-30 02:56:51,852 p=10817 u=root n=ansible | ok: [app01] => {
+    "msg": "apache-tomcat-8.5.37"
+}
+2025-07-30 02:56:51,882 p=10817 u=root n=ansible | TASK [Synchronize /tmp/tomcat8/tomcat_cont /usr/local/tomcat8.] *************************************************************
+2025-07-30 02:56:52,431 p=10817 u=root n=ansible | changed: [app01 -> 172.20.4.17]
+2025-07-30 02:56:52,440 p=10817 u=root n=ansible | TASK [Change ownership of /usr/local/tomcat8] *******************************************************************************
+2025-07-30 02:56:52,824 p=10817 u=root n=ansible | changed: [app01]
+2025-07-30 02:56:52,834 p=10817 u=root n=ansible | TASK [Setup tomcat SVC file on ubuntu 16 and 18] ****************************************************************************
+2025-07-30 02:56:53,759 p=10817 u=root n=ansible | ok: [app01]
+2025-07-30 02:56:53,769 p=10817 u=root n=ansible | TASK [just force systemd to reread configs (2.4 and above)] *****************************************************************
+2025-07-30 02:56:55,107 p=10817 u=root n=ansible | ok: [app01]
+2025-07-30 02:56:55,116 p=10817 u=root n=ansible | TASK [Start & Enable tomcat SVC] ********************************************************************************************
+2025-07-30 02:56:55,988 p=10817 u=root n=ansible | ok: [app01]
+2025-07-30 02:56:55,996 p=10817 u=root n=ansible | TASK [stat] *****************************************************************************************************************
+2025-07-30 02:56:56,685 p=10817 u=root n=ansible | ok: [app01]
+2025-07-30 02:56:56,695 p=10817 u=root n=ansible | TASK [Stop tomcat8 svc] *****************************************************************************************************
+2025-07-30 02:56:58,668 p=10817 u=root n=ansible | changed: [app01]
+2025-07-30 02:56:58,677 p=10817 u=root n=ansible | TASK [Archive ROOT dir with timestamp] **************************************************************************************
+2025-07-30 02:57:01,916 p=10817 u=root n=ansible | changed: [app01]
+2025-07-30 02:57:01,926 p=10817 u=root n=ansible | TASK [copy ROOT dir with old_ROOT name] *************************************************************************************
+2025-07-30 02:57:02,300 p=10817 u=root n=ansible | changed: [app01]
+2025-07-30 02:57:02,310 p=10817 u=root n=ansible | TASK [Delete current artifact] **********************************************************************************************
+2025-07-30 02:57:02,653 p=10817 u=root n=ansible | changed: [app01] => (item=/usr/local/tomcat8/webapps/ROOT)
+2025-07-30 02:57:02,950 p=10817 u=root n=ansible | changed: [app01] => (item=/usr/local/tomcat8/webapps/ROOT.war)
+2025-07-30 02:57:02,962 p=10817 u=root n=ansible | TASK [Deploy vprofile artifact] *********************************************************************************************
+2025-07-30 02:57:06,145 p=10817 u=root n=ansible | changed: [app01]
+2025-07-30 02:57:06,153 p=10817 u=root n=ansible | TASK [Start tomcat8 svc] ****************************************************************************************************
+2025-07-30 02:57:06,666 p=10817 u=root n=ansible | changed: [app01]
+2025-07-30 02:57:06,674 p=10817 u=root n=ansible | TASK [Wait until ROOT.war is extracted to ROOT directory] *******************************************************************
+2025-07-30 02:57:09,128 p=10817 u=root n=ansible | ok: [app01]
+2025-07-30 02:57:09,136 p=10817 u=root n=ansible | TASK [Deploy web configuration file] ****************************************************************************************
+2025-07-30 02:57:10,185 p=10817 u=root n=ansible | changed: [app01]
+2025-07-30 02:57:10,193 p=10817 u=root n=ansible | RUNNING HANDLER [Restart Tomcat] ********************************************************************************************
+2025-07-30 02:57:12,364 p=10817 u=root n=ansible | changed: [app01]
+2025-07-30 02:57:12,374 p=10817 u=root n=ansible | PLAY [Setup Nginx svc] ******************************************************************************************************
+2025-07-30 02:57:12,389 p=10817 u=root n=ansible | TASK [Install nginx] ********************************************************************************************************
+2025-07-30 02:57:57,857 p=10817 u=root n=ansible | changed: [web01]
+2025-07-30 02:57:57,866 p=10817 u=root n=ansible | TASK [Start & ENable Nginx] *************************************************************************************************
+2025-07-30 02:57:58,383 p=10817 u=root n=ansible | ok: [web01]
+2025-07-30 02:57:58,391 p=10817 u=root n=ansible | TASK [Disable Nginx default website] ****************************************************************************************
+2025-07-30 02:57:58,706 p=10817 u=root n=ansible | changed: [web01]
+2025-07-30 02:57:58,716 p=10817 u=root n=ansible | TASK [Deploy web config file] ***********************************************************************************************
+2025-07-30 02:57:59,309 p=10817 u=root n=ansible | changed: [web01]
+2025-07-30 02:57:59,318 p=10817 u=root n=ansible | TASK [Enable vproapp website] ***********************************************************************************************
+2025-07-30 02:57:59,617 p=10817 u=root n=ansible | changed: [web01]
+2025-07-30 02:57:59,627 p=10817 u=root n=ansible | RUNNING HANDLER [Restart Nginx] *********************************************************************************************
+2025-07-30 02:58:00,163 p=10817 u=root n=ansible | changed: [web01]
+2025-07-30 02:58:00,175 p=10817 u=root n=ansible | PLAY RECAP ******************************************************************************************************************
+2025-07-30 02:58:00,175 p=10817 u=root n=ansible | app01                      : ok=26   changed=10   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-30 02:58:00,176 p=10817 u=root n=ansible | cntl                       : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-30 02:58:00,176 p=10817 u=root n=ansible | db01                       : ok=12   changed=8    unreachable=0    failed=0    skipped=0    rescued=0    ignored=1   
+2025-07-30 02:58:00,176 p=10817 u=root n=ansible | localhost                  : ok=5    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2025-07-30 02:58:00,177 p=10817 u=root n=ansible | mc01                       : ok=7    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-30 02:58:00,177 p=10817 u=root n=ansible | rmq01                      : ok=18   changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-30 02:58:00,177 p=10817 u=root n=ansible | web01                      : ok=9    changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-30 03:37:10,589 p=13535 u=root n=ansible | PLAY [Generate artifact, copy artifact & sql file to files directory] *******************************************************
+2025-07-30 03:37:10,608 p=13535 u=root n=ansible | TASK [Gathering Facts] ******************************************************************************************************
+2025-07-30 03:37:11,749 p=13535 u=root n=ansible | ok: [localhost]
+2025-07-30 03:37:11,763 p=13535 u=root n=ansible | TASK [Install  jdk, maven, git] *********************************************************************************************
+2025-07-30 03:37:19,541 p=13535 u=root n=ansible | ok: [localhost] => (item=git)
+2025-07-30 03:37:22,326 p=13535 u=root n=ansible | ok: [localhost] => (item=openjdk-8-jdk)
+2025-07-30 03:37:25,106 p=13535 u=root n=ansible | ok: [localhost] => (item=maven)
+2025-07-30 03:37:25,117 p=13535 u=root n=ansible | TASK [Clone source code from github] ****************************************************************************************
+2025-07-30 03:37:27,122 p=13535 u=root n=ansible | changed: [localhost]
+2025-07-30 03:37:27,133 p=13535 u=root n=ansible | TASK [mvn install command to build artifact] ********************************************************************************
+2025-07-30 03:37:55,276 p=13535 u=root n=ansible | changed: [localhost]
+2025-07-30 03:37:55,294 p=13535 u=root n=ansible | TASK [Copy artifacts to files directory] ************************************************************************************
+2025-07-30 03:37:57,080 p=13535 u=root n=ansible | changed: [localhost] => (item=/root/vpro-stack/vprofile-project/provision-stack/Vprofile-repo/target/vprofile-v2.war)
+2025-07-30 03:37:57,090 p=13535 u=root n=ansible | TASK [Copy SQL file to files directory] *************************************************************************************
+2025-07-30 03:37:57,561 p=13535 u=root n=ansible | changed: [localhost]
+2025-07-30 03:37:57,578 p=13535 u=root n=ansible | PLAY [Set host to ip mapping in /etc/hosts file of all the instances in the stack] ******************************************
+2025-07-30 03:37:57,584 p=13535 u=root n=ansible | TASK [Gathering Facts] ******************************************************************************************************
+2025-07-30 03:37:59,294 p=13535 u=root n=ansible | ok: [cntl]
+2025-07-30 03:37:59,505 p=13535 u=root n=ansible | ok: [web01]
+2025-07-30 03:37:59,585 p=13535 u=root n=ansible | ok: [app01]
+2025-07-30 03:37:59,602 p=13535 u=root n=ansible | ok: [rmq01]
+2025-07-30 03:37:59,842 p=13535 u=root n=ansible | ok: [mc01]
+2025-07-30 03:38:01,638 p=13535 u=root n=ansible | ok: [db01]
+2025-07-30 03:38:01,656 p=13535 u=root n=ansible | TASK [Import VPC setup Variable] ********************************************************************************************
+2025-07-30 03:38:01,714 p=13535 u=root n=ansible | ok: [cntl]
+2025-07-30 03:38:01,739 p=13535 u=root n=ansible | ok: [web01]
+2025-07-30 03:38:01,764 p=13535 u=root n=ansible | ok: [app01]
+2025-07-30 03:38:01,789 p=13535 u=root n=ansible | ok: [rmq01]
+2025-07-30 03:38:01,791 p=13535 u=root n=ansible | ok: [mc01]
+2025-07-30 03:38:01,799 p=13535 u=root n=ansible | ok: [db01]
+2025-07-30 03:38:01,808 p=13535 u=root n=ansible | TASK [Update hosts file for all the hosts] **********************************************************************************
+2025-07-30 03:38:02,753 p=13535 u=root n=ansible | ok: [rmq01]
+2025-07-30 03:38:02,755 p=13535 u=root n=ansible | ok: [web01]
+2025-07-30 03:38:02,755 p=13535 u=root n=ansible | ok: [app01]
+2025-07-30 03:38:02,757 p=13535 u=root n=ansible | ok: [mc01]
+2025-07-30 03:38:02,758 p=13535 u=root n=ansible | ok: [cntl]
+2025-07-30 03:38:03,078 p=13535 u=root n=ansible | ok: [db01]
+2025-07-30 03:38:03,099 p=13535 u=root n=ansible | PLAY [Setup Mysql with accounts db and remote login] ************************************************************************
+2025-07-30 03:38:03,115 p=13535 u=root n=ansible | TASK [Installing Mysql Service and dependencies] ****************************************************************************
+2025-07-30 03:38:04,780 p=13535 u=root n=ansible | ok: [db01] => (item=mysql-server)
+2025-07-30 03:38:06,050 p=13535 u=root n=ansible | ok: [db01] => (item=mysql-client)
+2025-07-30 03:38:06,953 p=13535 u=root n=ansible | failed: [db01] (item=python-mysqldb) => {"ansible_loop_var": "item", "changed": false, "item": "python-mysqldb", "msg": "No package matching 'python-mysqldb' is available"}
+2025-07-30 03:38:08,189 p=13535 u=root n=ansible | ok: [db01] => (item=python3-mysqldb)
+2025-07-30 03:38:09,466 p=13535 u=root n=ansible | ok: [db01] => (item=libmysqlclient-dev)
+2025-07-30 03:38:09,467 p=13535 u=root n=ansible | ...ignoring
+2025-07-30 03:38:09,478 p=13535 u=root n=ansible | TASK [Start and enable mysql service] ***************************************************************************************
+2025-07-30 03:38:10,385 p=13535 u=root n=ansible | ok: [db01]
+2025-07-30 03:38:10,394 p=13535 u=root n=ansible | TASK [creating mysql user] **************************************************************************************************
+2025-07-30 03:38:10,987 p=13535 u=root n=ansible | changed: [db01]
+2025-07-30 03:38:10,998 p=13535 u=root n=ansible | TASK [Creating accounts DB] *************************************************************************************************
+2025-07-30 03:38:11,510 p=13535 u=root n=ansible | ok: [db01]
+2025-07-30 03:38:11,520 p=13535 u=root n=ansible | TASK [Enable remote login to mysql svc] *************************************************************************************
+2025-07-30 03:38:12,006 p=13535 u=root n=ansible | ok: [db01]
+2025-07-30 03:38:12,024 p=13535 u=root n=ansible | PLAY [Deploy SQL file on accounts db] ***************************************************************************************
+2025-07-30 03:38:12,038 p=13535 u=root n=ansible | TASK [Copy SQL to dbsrv] ****************************************************************************************************
+2025-07-30 03:38:12,702 p=13535 u=root n=ansible | changed: [db01]
+2025-07-30 03:38:12,711 p=13535 u=root n=ansible | TASK [Restoring DB] *********************************************************************************************************
+2025-07-30 03:38:13,379 p=13535 u=root n=ansible | changed: [db01]
+2025-07-30 03:38:13,388 p=13535 u=root n=ansible | RUNNING HANDLER [Restart mysql] *********************************************************************************************
+2025-07-30 03:38:18,442 p=13535 u=root n=ansible | changed: [db01]
+2025-07-30 03:38:18,452 p=13535 u=root n=ansible | PLAY [Install Memcache, Start & enable SVC] *********************************************************************************
+2025-07-30 03:38:18,467 p=13535 u=root n=ansible | TASK [Install Memcache] *****************************************************************************************************
+2025-07-30 03:38:19,747 p=13535 u=root n=ansible | ok: [mc01]
+2025-07-30 03:38:19,755 p=13535 u=root n=ansible | TASK [Start & Enable Memcache] **********************************************************************************************
+2025-07-30 03:38:20,261 p=13535 u=root n=ansible | ok: [mc01]
+2025-07-30 03:38:20,269 p=13535 u=root n=ansible | TASK [Enable remote login to memecache] *************************************************************************************
+2025-07-30 03:38:20,578 p=13535 u=root n=ansible | ok: [mc01]
+2025-07-30 03:38:20,595 p=13535 u=root n=ansible | PLAY [Install & Setup RabbitMQ with user (Ubuntu 22.04 Compatible)] *********************************************************
+2025-07-30 03:38:20,603 p=13535 u=root n=ansible | TASK [Gathering Facts] ******************************************************************************************************
+2025-07-30 03:38:21,462 p=13535 u=root n=ansible | ok: [rmq01]
+2025-07-30 03:38:21,477 p=13535 u=root n=ansible | TASK [Update apt cache] *****************************************************************************************************
+2025-07-30 03:38:22,336 p=13535 u=root n=ansible | ok: [rmq01]
+2025-07-30 03:38:22,344 p=13535 u=root n=ansible | TASK [Install required dependencies] ****************************************************************************************
+2025-07-30 03:38:23,521 p=13535 u=root n=ansible | ok: [rmq01]
+2025-07-30 03:38:23,532 p=13535 u=root n=ansible | TASK [Remove any existing RabbitMQ repositories] ****************************************************************************
+2025-07-30 03:38:24,027 p=13535 u=root n=ansible | ok: [rmq01] => (item=/etc/apt/sources.list.d/rabbitmq.list)
+2025-07-30 03:38:24,324 p=13535 u=root n=ansible | ok: [rmq01] => (item=/etc/apt/sources.list.d/rabbitmq-server.list)
+2025-07-30 03:38:24,334 p=13535 u=root n=ansible | TASK [Install Erlang from Ubuntu repositories (base packages)] **************************************************************
+2025-07-30 03:38:31,488 p=13535 u=root n=ansible | ok: [rmq01]
+2025-07-30 03:38:31,498 p=13535 u=root n=ansible | TASK [Download compatible RabbitMQ version (3.8.x series)] ******************************************************************
+2025-07-30 03:38:32,479 p=13535 u=root n=ansible | ok: [rmq01]
+2025-07-30 03:38:32,489 p=13535 u=root n=ansible | TASK [Install RabbitMQ from downloaded package (force dependencies)] ********************************************************
+2025-07-30 03:38:46,795 p=13535 u=root n=ansible | changed: [rmq01]
+2025-07-30 03:38:46,804 p=13535 u=root n=ansible | TASK [Check if RabbitMQ was installed successfully] *************************************************************************
+2025-07-30 03:38:47,123 p=13535 u=root n=ansible | changed: [rmq01]
+2025-07-30 03:38:47,134 p=13535 u=root n=ansible | TASK [Show installation result] *********************************************************************************************
+2025-07-30 03:38:47,171 p=13535 u=root n=ansible | ok: [rmq01] => {
+    "msg": "RabbitMQ installation: SUCCESS"
+}
+2025-07-30 03:38:47,179 p=13535 u=root n=ansible | TASK [Install RabbitMQ Server] **********************************************************************************************
+2025-07-30 03:38:51,593 p=13535 u=root n=ansible | ok: [rmq01]
+2025-07-30 03:38:51,602 p=13535 u=root n=ansible | TASK [Start & Enable RabbitMQ service] **************************************************************************************
+2025-07-30 03:38:52,694 p=13535 u=root n=ansible | ok: [rmq01]
+2025-07-30 03:38:52,704 p=13535 u=root n=ansible | TASK [Wait for RabbitMQ to be ready] ****************************************************************************************
+2025-07-30 03:38:58,171 p=13535 u=root n=ansible | ok: [rmq01]
+2025-07-30 03:38:58,180 p=13535 u=root n=ansible | TASK [Configure RabbitMQ (modern format)] ***********************************************************************************
+2025-07-30 03:38:58,889 p=13535 u=root n=ansible | ok: [rmq01]
+2025-07-30 03:38:58,898 p=13535 u=root n=ansible | TASK [Enable RabbitMQ management plugin] ************************************************************************************
+2025-07-30 03:39:03,081 p=13535 u=root n=ansible | ok: [rmq01]
+2025-07-30 03:39:03,091 p=13535 u=root n=ansible | TASK [Create RabbitMQ admin user] *******************************************************************************************
+2025-07-30 03:39:07,704 p=13535 u=root n=ansible | ok: [rmq01]
+2025-07-30 03:39:07,724 p=13535 u=root n=ansible | PLAY [Setup Tomcat8 & Deploy Artifact] **************************************************************************************
+2025-07-30 03:39:07,733 p=13535 u=root n=ansible | TASK [Gathering Facts] ******************************************************************************************************
+2025-07-30 03:39:09,104 p=13535 u=root n=ansible | ok: [app01]
+2025-07-30 03:39:09,117 p=13535 u=root n=ansible | TASK [Install JDK on Ubuntu 18/20] ******************************************************************************************
+2025-07-30 03:39:17,084 p=13535 u=root n=ansible | ok: [app01]
+2025-07-30 03:39:17,093 p=13535 u=root n=ansible | TASK [Download Tomcat Tar Ball/Binaries] ************************************************************************************
+2025-07-30 03:39:18,309 p=13535 u=root n=ansible | ok: [app01]
+2025-07-30 03:39:18,318 p=13535 u=root n=ansible | TASK [Add tomcat group] *****************************************************************************************************
+2025-07-30 03:39:18,774 p=13535 u=root n=ansible | ok: [app01]
+2025-07-30 03:39:18,783 p=13535 u=root n=ansible | TASK [Add tomcat user] ******************************************************************************************************
+2025-07-30 03:39:19,325 p=13535 u=root n=ansible | ok: [app01]
+2025-07-30 03:39:19,335 p=13535 u=root n=ansible | TASK [file] *****************************************************************************************************************
+2025-07-30 03:39:19,654 p=13535 u=root n=ansible | ok: [app01]
+2025-07-30 03:39:19,663 p=13535 u=root n=ansible | TASK [Extract tomcat] *******************************************************************************************************
+2025-07-30 03:39:21,496 p=13535 u=root n=ansible | ok: [app01]
+2025-07-30 03:39:21,504 p=13535 u=root n=ansible | TASK [debug] ****************************************************************************************************************
+2025-07-30 03:39:21,542 p=13535 u=root n=ansible | ok: [app01] => {
+    "msg": "apache-tomcat-8.5.37"
+}
+2025-07-30 03:39:21,581 p=13535 u=root n=ansible | TASK [Synchronize /tmp/tomcat8/tomcat_cont /usr/local/tomcat8.] *************************************************************
+2025-07-30 03:39:22,248 p=13535 u=root n=ansible | changed: [app01 -> 172.20.4.17]
+2025-07-30 03:39:22,257 p=13535 u=root n=ansible | TASK [Change ownership of /usr/local/tomcat8] *******************************************************************************
+2025-07-30 03:39:22,805 p=13535 u=root n=ansible | changed: [app01]
+2025-07-30 03:39:22,814 p=13535 u=root n=ansible | TASK [Setup tomcat SVC file on ubuntu 16 and 18] ****************************************************************************
+2025-07-30 03:39:23,435 p=13535 u=root n=ansible | ok: [app01]
+2025-07-30 03:39:23,445 p=13535 u=root n=ansible | TASK [just force systemd to reread configs (2.4 and above)] *****************************************************************
+2025-07-30 03:39:24,439 p=13535 u=root n=ansible | ok: [app01]
+2025-07-30 03:39:24,448 p=13535 u=root n=ansible | TASK [Start & Enable tomcat SVC] ********************************************************************************************
+2025-07-30 03:39:24,929 p=13535 u=root n=ansible | ok: [app01]
+2025-07-30 03:39:24,938 p=13535 u=root n=ansible | TASK [stat] *****************************************************************************************************************
+2025-07-30 03:39:25,402 p=13535 u=root n=ansible | ok: [app01]
+2025-07-30 03:39:25,412 p=13535 u=root n=ansible | TASK [Stop tomcat8 svc] *****************************************************************************************************
+2025-07-30 03:39:27,299 p=13535 u=root n=ansible | changed: [app01]
+2025-07-30 03:39:27,310 p=13535 u=root n=ansible | TASK [Archive ROOT dir with timestamp] **************************************************************************************
+2025-07-30 03:39:30,683 p=13535 u=root n=ansible | changed: [app01]
+2025-07-30 03:39:30,694 p=13535 u=root n=ansible | TASK [copy ROOT dir with old_ROOT name] *************************************************************************************
+2025-07-30 03:39:31,164 p=13535 u=root n=ansible | changed: [app01]
+2025-07-30 03:39:31,173 p=13535 u=root n=ansible | TASK [Delete current artifact] **********************************************************************************************
+2025-07-30 03:39:31,517 p=13535 u=root n=ansible | changed: [app01] => (item=/usr/local/tomcat8/webapps/ROOT)
+2025-07-30 03:39:31,813 p=13535 u=root n=ansible | changed: [app01] => (item=/usr/local/tomcat8/webapps/ROOT.war)
+2025-07-30 03:39:31,824 p=13535 u=root n=ansible | TASK [Deploy vprofile artifact] *********************************************************************************************
+2025-07-30 03:39:35,473 p=13535 u=root n=ansible | changed: [app01]
+2025-07-30 03:39:35,483 p=13535 u=root n=ansible | TASK [Start tomcat8 svc] ****************************************************************************************************
+2025-07-30 03:39:36,000 p=13535 u=root n=ansible | changed: [app01]
+2025-07-30 03:39:36,010 p=13535 u=root n=ansible | TASK [Wait until ROOT.war is extracted to ROOT directory] *******************************************************************
+2025-07-30 03:39:38,515 p=13535 u=root n=ansible | ok: [app01]
+2025-07-30 03:39:38,523 p=13535 u=root n=ansible | TASK [Deploy web configuration file] ****************************************************************************************
+2025-07-30 03:39:39,586 p=13535 u=root n=ansible | changed: [app01]
+2025-07-30 03:39:39,597 p=13535 u=root n=ansible | RUNNING HANDLER [Restart Tomcat] ********************************************************************************************
+2025-07-30 03:39:41,741 p=13535 u=root n=ansible | changed: [app01]
+2025-07-30 03:39:41,752 p=13535 u=root n=ansible | PLAY [Setup Nginx svc] ******************************************************************************************************
+2025-07-30 03:39:41,766 p=13535 u=root n=ansible | TASK [Install nginx] ********************************************************************************************************
+2025-07-30 03:39:43,620 p=13535 u=root n=ansible | ok: [web01]
+2025-07-30 03:39:43,628 p=13535 u=root n=ansible | TASK [Start & ENable Nginx] *************************************************************************************************
+2025-07-30 03:39:44,108 p=13535 u=root n=ansible | ok: [web01]
+2025-07-30 03:39:44,117 p=13535 u=root n=ansible | TASK [Disable Nginx default website] ****************************************************************************************
+2025-07-30 03:39:44,433 p=13535 u=root n=ansible | ok: [web01]
+2025-07-30 03:39:44,441 p=13535 u=root n=ansible | TASK [Deploy web config file] ***********************************************************************************************
+2025-07-30 03:39:45,036 p=13535 u=root n=ansible | ok: [web01]
+2025-07-30 03:39:45,046 p=13535 u=root n=ansible | TASK [Enable vproapp website] ***********************************************************************************************
+2025-07-30 03:39:45,356 p=13535 u=root n=ansible | ok: [web01]
+2025-07-30 03:39:45,371 p=13535 u=root n=ansible | PLAY RECAP ******************************************************************************************************************
+2025-07-30 03:39:45,371 p=13535 u=root n=ansible | app01                      : ok=26   changed=10   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-30 03:39:45,372 p=13535 u=root n=ansible | cntl                       : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-30 03:39:45,372 p=13535 u=root n=ansible | db01                       : ok=11   changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=1   
+2025-07-30 03:39:45,372 p=13535 u=root n=ansible | localhost                  : ok=6    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-30 03:39:45,372 p=13535 u=root n=ansible | mc01                       : ok=6    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-30 03:39:45,373 p=13535 u=root n=ansible | rmq01                      : ok=18   changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-30 03:39:45,373 p=13535 u=root n=ansible | web01                      : ok=8    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
