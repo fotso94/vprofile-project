@@ -28,6 +28,20 @@
         - /etc/apt/sources.list.d/rabbitmq-server.list
       ignore_errors: yes
 
+    - name: Add Erlang Solutions GPG key
+      apt_key:
+        url: https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc
+        state: present
+      retries: 3
+      delay: 5
+
+    - name: Add Erlang Solutions repository
+      apt_repository:
+        repo: "deb https://packages.erlang-solutions.com/ubuntu jammy contrib"
+        state: present
+        filename: erlang-solutions
+        update_cache: no
+
     - name: Add RabbitMQ Team GPG key (Cloudsmith)
       apt_key:
         keyserver: keyserver.ubuntu.com
@@ -46,31 +60,14 @@
         filename: rabbitmq-server
         update_cache: no
 
-    - name: Update apt cache after adding repository
+    - name: Update apt cache after adding repositories
       apt:
         update_cache: yes
         cache_valid_time: 0
 
-    - name: Install Erlang from Ubuntu repositories (compatible version)
+    - name: Install modern Erlang from Erlang Solutions
       apt:
-        name:
-          - erlang-base
-          - erlang-asn1
-          - erlang-crypto
-          - erlang-eldap
-          - erlang-ftp
-          - erlang-inets
-          - erlang-mnesia
-          - erlang-os-mon
-          - erlang-parsetools
-          - erlang-public-key
-          - erlang-runtime-tools
-          - erlang-snmp
-          - erlang-ssl
-          - erlang-syntax-tools
-          - erlang-tftp
-          - erlang-tools
-          - erlang-xmerl
+        name: esl-erlang
         state: present
         update_cache: yes
 
