@@ -15,28 +15,26 @@
         - gnupg
         - apt-transport-https
         - software-properties-common
-        - erlang  # Ensure Erlang is present
+        - erlang
 
-    - name: Download RabbitMQ public signing key
-      get_url:
-        url: https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey
-        dest: /usr/share/keyrings/rabbitmq-archive-keyring.asc
-        mode: '0644'
+    - name: Download official RabbitMQ Cloudsmith GPG key
+      shell: |
+        curl -fsSL https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/gpg.9F4587F226208342.key | gpg --dearmor -o /usr/share/keyrings/rabbitmq-archive-keyring.gpg
+      args:
+        creates: /usr/share/keyrings/rabbitmq-archive-keyring.gpg
 
     - name: Add RabbitMQ APT repository (Ubuntu 22.04 - jammy)
       apt_repository:
-        repo: "deb [signed-by=/usr/share/keyrings/rabbitmq-archive-keyring.asc] https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/deb/ubuntu jammy main"
+        repo: "deb [signed-by=/usr/share/keyrings/rabbitmq-archive-keyring.gpg] https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/deb/ubuntu jammy main"
         state: present
         filename: rabbitmq
-
-    - name: Update apt cache after adding RabbitMQ repo
-      apt:
         update_cache: yes
 
     - name: Install RabbitMQ server
       apt:
         name: rabbitmq-server
         state: present
+        update_cache: yes
 
     - name: Start and enable RabbitMQ service
       service:
@@ -44,13 +42,15 @@
         state: started
         enabled: yes
 
-    - name: Configure RabbitMQ to allow all users (disable loopback restriction)
+    - name: Configure RabbitMQ to allow external connections
       copy:
         content: |
           [{rabbit, [{loopback_users, []}]}].
         dest: /etc/rabbitmq/rabbitmq.config
-      notify:
-        - Restart RabbitMQ
+        owner: root
+        group: root
+        mode: '0644'
+      notify: Restart RabbitMQ
 
     - name: Add RabbitMQ user
       rabbitmq_user:
@@ -61,15 +61,13 @@
         write_priv: .*
         tags: administrator
         state: present
-      notify:
-        - Restart RabbitMQ
+      notify: Restart RabbitMQ
 
-    - name: Enable RabbitMQ Management Plugin
+    - name: Enable RabbitMQ management plugin
       rabbitmq_plugin:
         names: rabbitmq_management
         state: enabled
-      notify:
-        - Restart RabbitMQ
+      notify: Restart RabbitMQ
 
   handlers:
     - name: Restart RabbitMQ
