@@ -1,74 +1,106 @@
 ---
-- name: Install & Setup RabbitMQ with user
+- name: Install & Setup RabbitMQ with user (Ubuntu 22.04 Compatible)
   hosts: rmqsrvgrp
   become: yes
   gather_facts: yes
 
   tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
     - name: Install required dependencies
       apt:
-        name: "{{ item }}"
-        state: present
-        update_cache: yes
-      loop:
-        - curl
-        - gnupg
-        - apt-transport-https
-        - software-properties-common
-
-    - name: Add Erlang Solutions GPG key
-      apt_key:
-        url: https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc
+        name:
+          - curl
+          - gnupg
+          - apt-transport-https
+          - software-properties-common
         state: present
 
-    - name: Add Erlang Solutions repository
-      apt_repository:
-        repo: "deb https://packages.erlang-solutions.com/ubuntu jammy contrib"
-        state: present
-        update_cache: yes
+    - name: Add RabbitMQ signing key (modern method)
+      get_url:
+        url: https://keys.openpgp.org/vks/v1/by-fingerprint/0A9AF2115F4687BD29803A206B73A36E6026DFCA
+        dest: /tmp/rabbitmq-release-signing-key.asc
+        mode: '0644'
 
-    - name: Install Erlang 26+
-      apt:
-        name: erlang
-        state: present
-        update_cache: yes
-
-    - name: Download RabbitMQ public signing key
+    - name: Add RabbitMQ GPG key to keyring
       shell: |
-        curl -fsSL https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/gpg.9F4587F226208342.key | gpg --dearmor -o /usr/share/keyrings/rabbitmq-archive-keyring.gpg
-      args:
-        creates: /usr/share/keyrings/rabbitmq-archive-keyring.gpg
+        gpg --dearmor < /tmp/rabbitmq-release-signing-key.asc > /usr/share/keyrings/rabbitmq-archive-keyring.gpg
 
-    - name: Add RabbitMQ APT repository (Ubuntu 22.04 - jammy)
+    - name: Add RabbitMQ repository for Ubuntu 22.04
       apt_repository:
-        repo: "deb [signed-by=/usr/share/keyrings/rabbitmq-archive-keyring.gpg] https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/deb/ubuntu jammy main"
+        repo: "deb [signed-by=/usr/share/keyrings/rabbitmq-archive-keyring.gpg] https://ppa1.novemberain.com/rabbitmq/rabbitmq-server/deb/ubuntu jammy main"
         state: present
         filename: rabbitmq
+
+    - name: Install Erlang from Ubuntu repositories (compatible version)
+      apt:
+        name:
+          - erlang-base
+          - erlang-asn1
+          - erlang-crypto
+          - erlang-eldap
+          - erlang-ftp
+          - erlang-inets
+          - erlang-mnesia
+          - erlang-os-mon
+          - erlang-parsetools
+          - erlang-public-key
+          - erlang-runtime-tools
+          - erlang-snmp
+          - erlang-ssl
+          - erlang-syntax-tools
+          - erlang-tftp
+          - erlang-tools
+          - erlang-xmerl
+        state: present
         update_cache: yes
 
-    - name: Install RabbitMQ server
+    - name: Install RabbitMQ Server
       apt:
         name: rabbitmq-server
         state: present
         update_cache: yes
 
-    - name: Start and enable RabbitMQ service
-      service:
+
+    - name: Start & Enable RabbitMQ service
+      systemd:
         name: rabbitmq-server
         state: started
         enabled: yes
+        daemon_reload: yes
 
-    - name: Configure RabbitMQ to allow external connections
+    - name: Wait for RabbitMQ to be ready
+      wait_for:
+        port: 5672
+        host: localhost
+        delay: 5
+        timeout: 60
+
+    - name: Configure RabbitMQ (modern format)
       copy:
         content: |
-          [{rabbit, [{loopback_users, []}]}].
-        dest: /etc/rabbitmq/rabbitmq.config
+          # Allow remote connections
+          loopback_users = none
+
+          # Enable management plugin
+          management.tcp.port = 15672
+          management.tcp.ip = 0.0.0.0
+        dest: /etc/rabbitmq/rabbitmq.conf
         owner: root
         group: root
         mode: '0644'
-      notify: Restart RabbitMQ
+      notify: Restart RMQ
 
-    - name: Add RabbitMQ user
+    - name: Enable RabbitMQ management plugin
+      rabbitmq_plugin:
+        names: rabbitmq_management
+        state: enabled
+      notify: Restart RMQ
+
+    - name: Create RabbitMQ admin user
       rabbitmq_user:
         user: test
         password: test
@@ -77,16 +109,10 @@
         write_priv: .*
         tags: administrator
         state: present
-      notify: Restart RabbitMQ
-
-    - name: Enable RabbitMQ management plugin
-      rabbitmq_plugin:
-        names: rabbitmq_management
-        state: enabled
-      notify: Restart RabbitMQ
+      notify: Restart RMQ
 
   handlers:
-    - name: Restart RabbitMQ
-      service:
+    - name: Restart RMQ
+      systemd:
         name: rabbitmq-server
         state: restarted
