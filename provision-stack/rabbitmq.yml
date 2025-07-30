@@ -15,9 +15,25 @@
         - gnupg
         - apt-transport-https
         - software-properties-common
-        - erlang
 
-    - name: Download official RabbitMQ Cloudsmith GPG key
+    - name: Add Erlang Solutions GPG key
+      apt_key:
+        url: https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc
+        state: present
+
+    - name: Add Erlang Solutions repository
+      apt_repository:
+        repo: "deb https://packages.erlang-solutions.com/ubuntu jammy contrib"
+        state: present
+        update_cache: yes
+
+    - name: Install Erlang 26+
+      apt:
+        name: erlang
+        state: present
+        update_cache: yes
+
+    - name: Download RabbitMQ public signing key
       shell: |
         curl -fsSL https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/gpg.9F4587F226208342.key | gpg --dearmor -o /usr/share/keyrings/rabbitmq-archive-keyring.gpg
       args:
