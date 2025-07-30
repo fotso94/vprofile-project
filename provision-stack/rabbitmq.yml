@@ -28,48 +28,47 @@
         - /etc/apt/sources.list.d/rabbitmq-server.list
       ignore_errors: yes
 
-    - name: Add Erlang Solutions GPG key
-      apt_key:
-        url: https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc
-        state: present
-      retries: 3
-      delay: 5
-
-    - name: Add Erlang Solutions repository
-      apt_repository:
-        repo: "deb https://packages.erlang-solutions.com/ubuntu jammy contrib"
-        state: present
-        filename: erlang-solutions
-        update_cache: no
-
-    - name: Add RabbitMQ Team GPG key (Cloudsmith)
-      apt_key:
-        keyserver: keyserver.ubuntu.com
-        id: 9F4587F226208342
-        state: present
-
-    - name: Add RabbitMQ main signing key
-      apt_key:
-        url: https://github.com/rabbitmq/signing-keys/releases/download/2.0/rabbitmq-release-signing-key.asc
-        state: present
-
-    - name: Add RabbitMQ repository (Cloudsmith - official)
-      apt_repository:
-        repo: "deb https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/deb/ubuntu jammy main"
-        state: present
-        filename: rabbitmq-server
-        update_cache: no
-
-    - name: Update apt cache after adding repositories
+    - name: Install Erlang from Ubuntu repositories (base packages)
       apt:
-        update_cache: yes
-        cache_valid_time: 0
-
-    - name: Install modern Erlang from Erlang Solutions
-      apt:
-        name: esl-erlang
+        name:
+          - erlang-base
+          - erlang-crypto
+          - erlang-eldap
+          - erlang-inets
+          - erlang-mnesia
+          - erlang-os-mon
+          - erlang-parsetools
+          - erlang-public-key
+          - erlang-runtime-tools
+          - erlang-ssl
+          - erlang-syntax-tools
+          - erlang-tools
+          - erlang-xmerl
         state: present
         update_cache: yes
+
+    - name: Download compatible RabbitMQ version (3.8.x series)
+      get_url:
+        url: "https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.8.34/rabbitmq-server_3.8.34-1_all.deb"
+        dest: /tmp/rabbitmq-server.deb
+        mode: '0644'
+        timeout: 30
+
+    - name: Install RabbitMQ from downloaded package (force dependencies)
+      shell: |
+        dpkg -i --force-depends /tmp/rabbitmq-server.deb || true
+        apt-get install -f -y
+      register: rabbitmq_install
+      ignore_errors: yes
+
+    - name: Check if RabbitMQ was installed successfully
+      shell: dpkg -l | grep rabbitmq-server
+      register: rabbitmq_check
+      ignore_errors: yes
+
+    - name: Show installation result
+      debug:
+        msg: "RabbitMQ installation: {{ 'SUCCESS' if rabbitmq_check.rc == 0 else 'FAILED' }}"
 
     - name: Install RabbitMQ Server
       apt:
