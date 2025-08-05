@@ -1,17 +1,15 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="CI_CD_TEST" verbose="1">
-	
-<!-- 	<test name="BasicTest">
+<suite name="CI_CD_TEST" verbose="2">
+
+	<test name="TestNGVerification">
 		<classes>
-			<class name="SeleniumSmoke.Selenium.login"/>
-			</classes>
-	</test> -->
+			<class name="DevOPS.devOPS.TestNGVerification"/>
+		</classes>
+	</test>
+
 	<test name="PrincipleTestSuite">
 		<classes>
 			<class name="DevOPS.devOPS.VProfile_TestSuite"/>
-			</classes>
+		</classes>
 	</test>
-	
-
-		
 </suite>

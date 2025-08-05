@@ -293,6 +293,14 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.2</version>
+                <dependencies>
+                    <!-- Force TestNG provider -->
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-testng</artifactId>
+                        <version>3.2.2</version>
+                    </dependency>
+                </dependencies>
                 <configuration>
                     <!-- Use TestNG XML file -->
                     <suiteXmlFiles>
@@ -306,19 +314,12 @@
                         <sShotPath>${sShotPath}</sShotPath>
                         <browser>${browser}</browser>
                     </systemPropertyVariables>
-                    <!-- TestNG specific configuration -->
-                    <properties>
-                        <property>
-                            <name>usedefaultlisteners</name>
-                            <value>false</value>
-                        </property>
-                        <property>
-                            <name>listener</name>
-                            <value>org.testng.reporters.EmailableReporter2,org.testng.reporters.FailedReporter</value>
-                        </property>
-                    </properties>
+                    <!-- Force TestNG (not JUnit) -->
+                    <testNGArtifactName>org.testng:testng</testNGArtifactName>
                     <!-- Ensure tests run even if some fail -->
                     <testFailureIgnore>false</testFailureIgnore>
+                    <!-- Verbose output for debugging -->
+                    <argLine>-Dtestng.verbose=2</argLine>
                 </configuration>
             </plugin>
 
@@ -364,4 +365,41 @@
             </plugin>
         </plugins>
     </build>
+
+    <!-- Profiles for different test execution modes -->
+    <profiles>
+        <profile>
+            <id>selenium-tests</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>3.2.2</version>
+                        <configuration>
+                            <suiteXmlFiles>
+                                <suiteXmlFile>testng.xml</suiteXmlFile>
+                            </suiteXmlFiles>
+                            <systemPropertyVariables>
+                                <url>${url}</url>
+                                <usr>${usr}</usr>
+                                <pass>${pass}</pass>
+                                <sShotPath>${sShotPath}</sShotPath>
+                            </systemPropertyVariables>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.apache.maven.surefire</groupId>
+                                <artifactId>surefire-testng</artifactId>
+                                <version>3.2.2</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
