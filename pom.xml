@@ -269,7 +269,6 @@
              <groupId>org.testng</groupId>
              <artifactId>testng</artifactId>
              <version>7.8.0</version>
-             <scope>test</scope>
          </dependency>
 
     </dependencies>
@@ -289,22 +288,37 @@
                 </configuration>
             </plugin>
 
-            <!-- Maven Surefire Plugin for running tests -->
+            <!-- Maven Surefire Plugin for running TestNG tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.2</version>
                 <configuration>
-                    <includes>
-                        <include>**/*Test.java</include>
-                        <include>**/*TestSuite.java</include>
-                    </includes>
+                    <!-- Use TestNG XML file -->
+                    <suiteXmlFiles>
+                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                    <!-- System properties for test parameters -->
                     <systemPropertyVariables>
                         <url>${url}</url>
                         <usr>${usr}</usr>
                         <pass>${pass}</pass>
-                        <sShotPath>${path}</sShotPath>
+                        <sShotPath>${sShotPath}</sShotPath>
+                        <browser>${browser}</browser>
                     </systemPropertyVariables>
+                    <!-- TestNG specific configuration -->
+                    <properties>
+                        <property>
+                            <name>usedefaultlisteners</name>
+                            <value>false</value>
+                        </property>
+                        <property>
+                            <name>listener</name>
+                            <value>org.testng.reporters.EmailableReporter2,org.testng.reporters.FailedReporter</value>
+                        </property>
+                    </properties>
+                    <!-- Ensure tests run even if some fail -->
+                    <testFailureIgnore>false</testFailureIgnore>
                 </configuration>
             </plugin>
 
