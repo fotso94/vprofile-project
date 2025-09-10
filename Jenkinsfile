@@ -81,7 +81,7 @@ pipeline {
             }
 
             steps {
-                withSonarQubeEnv('sonar-pro') {
+                withSonarQubeEnv('sonar-vpro') {
                     sh '''
 			            mvn -B -DskipTests \
 			              -Dsonar.projectKey=vprofile \
