@@ -75,30 +75,30 @@ pipeline {
         }
 
         stage('CODE ANALYSIS with SONARQUBE') {
-
-            environment {
-                scannerHome = tool 'mysonarscanner4'
-            }
-
-            steps {
-                withSonarQubeEnv('sonar-vpro') {
-                    sh '''
-			            mvn -B -DskipTests \
-			              -Dsonar.projectKey=vprofile \
-			              -Dsonar.projectName=vprofile-repo \
-			              -Dsonar.projectVersion=1.0 \
-			              -Dsonar.sources=src \
-			              -Dsonar.java.binaries=target/classes \
-			              -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
-			              sonar:sonar
-          		    '''
-                }
-
-                timeout(time: 10, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        }
+		    environment {
+		        scannerHome = tool 'mysonarscanner4'
+		    }
+		
+		    steps {
+		        withSonarQubeEnv('sonar-vpro') {
+		            sh '''
+		            mvn clean verify sonar:sonar \
+		              -Dsonar.projectKey=vprofile \
+		              -Dsonar.projectName=vprofile-repo \
+		              -Dsonar.projectVersion=1.0 \
+		              -Dsonar.sources=src/main/java \
+		              -Dsonar.tests=src/test/java \
+		              -Dsonar.java.binaries=target/classes \
+		              -Dsonar.java.test.binaries=target/test-classes \
+		              -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
+		              -DskipTests=true
+		            '''
+		        }
+		
+		        timeout(time: 10, unit: 'MINUTES') {
+		            waitForQualityGate abortPipeline: true
+		        }
+		    }
         stage('Kubernetes Deploy') {
 	  agent { label 'KOPS' }
             steps {
