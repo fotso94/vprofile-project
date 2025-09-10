@@ -99,6 +99,7 @@ pipeline {
 		            waitForQualityGate abortPipeline: true
 		        }
 		    }
+		}
         stage('Kubernetes Deploy') {
 	  agent { label 'KOPS' }
             steps {
