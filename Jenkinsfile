@@ -101,11 +101,20 @@ pipeline {
 		    }
 		}
         stage('Kubernetes Deploy') {
-	  agent { label 'KOPS' }
-            steps {
-                    sh "helm upgrade --install --force vproifle-stack helm/vprofilecharts --set appimage=${registry}:${BUILD_NUMBER} --namespace prod"
-            }
-        }
+		    agent { label 'KOPS' }
+		    steps {
+		        withCredentials([file(credentialsId: 'kubeconfig-file', variable: 'KUBECONFIG')]) {
+		            sh '''
+		                export KUBECONFIG=$KUBECONFIG
+		                kubectl get nodes
+		                kubectl create namespace prod --dry-run=client -o yaml | kubectl apply -f -
+		                helm upgrade --install --force vprofile-stack helm/vprofilecharts \
+		                  --set appimage=${registry}:${BUILD_NUMBER} \
+		                  --namespace prod
+		            '''
+		        }
+		    }
+		}
 
     }
 
